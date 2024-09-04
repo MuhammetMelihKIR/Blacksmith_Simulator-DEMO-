@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af9c279f0417594ebddbf3b174d2086, type: 3}
+  m_Name: MeltedGold
+  m_EditorClassIdentifier: 
+  inputMaterial: {fileID: 11400000, guid: 6685b1b63883584499b24527e5a9e48f, type: 2}
+  outputMaterial: {fileID: 11400000, guid: 2b6548e4d554aca45ab9f4f97f19730d, type: 2}
+  meltTime: 0
