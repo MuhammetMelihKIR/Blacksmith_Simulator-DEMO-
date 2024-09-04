@@ -48,7 +48,7 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
 
     private void OnEnable()
     {
-        CoreGameSignals.Instance.OnOutlineDeactive += OnOutlineDeactive;
+        CoreGameSignals.OnOutlineDeactive += OnOutlineDeactive;
     }
     
     private void OnOutlineDeactive()
@@ -58,7 +58,7 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
 
     private void OnDisable()
     {
-        CoreGameSignals.Instance.OnOutlineDeactive -= OnOutlineDeactive;
+        CoreGameSignals.OnOutlineDeactive -= OnOutlineDeactive;
     }
 
     #endregion

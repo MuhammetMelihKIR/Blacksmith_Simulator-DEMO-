@@ -52,20 +52,29 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         playerInput.Enable();
-        CoreGameSignals.Instance.OnInteractObjectControl += OnIsTrigger;
+        CoreGameSignals.OnInteractObjectControl += OnIsTrigger;
         
+        CoreUISignals.OnProductionTable_CanvasIsActive += OnPlayerCanMove;
+
     }
     
     private void OnIsTrigger(bool isTrigger)
     {
         this.isInteract = isTrigger;
     }
+    
+    private void OnPlayerCanMove(bool canMove)
+    {
+       playerCanMove = !canMove;
+    }
 
 
     private void OnDisable()
     {
         playerInput.Disable();
-        CoreGameSignals.Instance.OnInteractObjectControl -= OnIsTrigger;
+        CoreGameSignals.OnInteractObjectControl -= OnIsTrigger;
+        
+        CoreUISignals.OnProductionTable_CanvasIsActive -= OnPlayerCanMove;
     }
 
     #endregion
@@ -74,7 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isInteract)
         {
-            CoreGameSignals.Instance.OnInteractObject?.Invoke();
+            CoreGameSignals.OnInteractObject?.Invoke();
         }
         
     }

@@ -17,13 +17,13 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     #endregion
     private void OnEnable()
     { 
-        CoreGameSignals.Instance.OnTakeableObjectDetected += HandleTakeableObject;
+        CoreGameSignals.OnTakeableObjectDetected += HandleTakeableObject;
         
     }
 
     private void OnDisable()
     {
-        CoreGameSignals.Instance.OnTakeableObjectDetected -= HandleTakeableObject;
+        CoreGameSignals.OnTakeableObjectDetected -= HandleTakeableObject;
     }
     
     public BlackSmithObjectSO GetBlackSmithObjectSO()

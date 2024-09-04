@@ -10,7 +10,7 @@ public class PlayerRaycast : MonoBehaviour
 
     private void OnEnable()
     {
-        CoreGameSignals.Instance.OnInteractObject += DrawRaycast;
+        CoreGameSignals.OnInteractObject += DrawRaycast;
     }
     
 
@@ -23,7 +23,12 @@ public class PlayerRaycast : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
             {
-                CoreGameSignals.Instance.OnTakeableObjectDetected?.Invoke(takeable);
+                CoreGameSignals.OnTakeableObjectDetected?.Invoke(takeable);
+            }
+            else if (hit.collider.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
+            {
+                getInteractable.GetInteract();
+                print("Interact");
             }
         } 
     }
@@ -31,7 +36,7 @@ public class PlayerRaycast : MonoBehaviour
 
     private void OnDisable()
     {
-        CoreGameSignals.Instance.OnInteractObject -= DrawRaycast;
+        CoreGameSignals.OnInteractObject -= DrawRaycast;
     }
     
     

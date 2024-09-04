@@ -9,8 +9,14 @@ public class PlayerInteractController : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
         { 
-            CoreGameSignals.Instance.OnInteractObjectControl?.Invoke(true);
+            CoreGameSignals.OnInteractObjectControl?.Invoke(true);
             takeable.OutlineActive();
+            
+        }
+        else if (other.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
+        {
+            CoreGameSignals.OnInteractObjectControl?.Invoke(true);
+            getInteractable.OutlineActive();
             
         }
     }
@@ -19,9 +25,15 @@ public class PlayerInteractController : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
         {
-            CoreGameSignals.Instance.OnInteractObjectControl?.Invoke(false);
-            CoreGameSignals.Instance.OnOutlineDeactive?.Invoke();
+            CoreGameSignals.OnInteractObjectControl?.Invoke(false);
+            CoreGameSignals.OnOutlineDeactive?.Invoke();
             
+        }
+        else if (other.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
+        {
+            CoreGameSignals.OnInteractObjectControl?.Invoke(false);
+            CoreGameSignals.OnOutlineDeactive?.Invoke();
+
         }
     }
 }

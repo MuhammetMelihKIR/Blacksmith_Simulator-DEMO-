@@ -4,62 +4,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProductionTableManager : MonoBehaviour, ITakeable
+public class ProductionTableManager : MonoBehaviour, IGetInteractable
 {
     [SerializeField] private Material prefabMaterial;
     [SerializeField] private Transform instantiatePoint;
-    [SerializeField]private List<GameObject> equipmentList = new List<GameObject>();
+    [SerializeField] private List<GameObject> equipmentList = new List<GameObject>();
 
     [Header("UI")] 
     [SerializeField] private Canvas productionCanvas;
+    [SerializeField] private GameObject equipmentListPanel;
+    [SerializeField] private GameObject forgingSliderPanel;
     [SerializeField] private Button button;
     
     private Outline outline;
 
-    #region ITakeable INTERFACE
-
-    public void GetObject()
+    #region IGetInteractable INTERFACE
+    
+    public void GetInteract()
     {
+        CoreGameSignals.OnPlayerCameraChange?.Invoke(true);
+        CoreUISignals.OnProductionTable_CanvasIsActive?.Invoke(true);
+        CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(true);
+        CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
+        OnOutlineDeactive();
         
     }
 
-    public void GiveObject()
-    {
-        
-    }
-    
-    public GameObject GetPrefab()
-    {
-        return null;
-    }
-    
     public void OutlineActive()
     {
         outline.enabled = true;
     }
     
-    public BlackSmithObjectSO GetBlackSmithObjectSO()
-    {
-        return null;
-    }
 
     #endregion
 
+    #region ON ENABLE/DISABLE
+
     private void OnEnable()
     {
-        CoreGameSignals.Instance.OnInstantiateObjectProductionTable += InstantiateObject;
+        CoreGameSignals.OnOutlineDeactive += OnOutlineDeactive;
+        CoreGameSignals.OnInstantiateObjectProductionTable += InstantiateObject;
+        
+        CoreUISignals.OnProductionTable_CanvasIsActive += OnCanvasIsActive;
+        CoreUISignals.OnProductionTable_EquipmentListPanelIsActive += OnEquipmentListPanelIsActive;
+        CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive += OnForgingSliderPanelIsActive;
     }
-
-    private void OnDisable()
+    
+    private void OnOutlineDeactive()
     {
-        CoreGameSignals.Instance.OnInstantiateObjectProductionTable -= InstantiateObject;
+        outline.enabled = false;
     }
-
-    private void Awake()
-    {
-        outline = GetComponent<Outline>();
-        button.onClick.AddListener(CloseCanvas);
-    }
+    
     private void InstantiateObject(GameObject prefab)
     {
         GameObject obj = Instantiate(prefab , instantiatePoint.position , prefab.transform.rotation);
@@ -74,9 +69,52 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         
     }
     
-    private void CloseCanvas()
+    #region UI 
+
+    private void OnCanvasIsActive(bool isActive)
     {
-        productionCanvas.enabled = false;
+        productionCanvas.gameObject.SetActive(isActive);
     }
+    
+    private void OnEquipmentListPanelIsActive(bool isActive)
+    {
+        equipmentListPanel.SetActive(isActive);
+    }
+    
+    private void OnForgingSliderPanelIsActive(bool isActive)
+    {
+        forgingSliderPanel.SetActive(isActive);
+    }
+
+    #endregion
+
+    private void OnDisable()
+    {
+        CoreGameSignals.OnOutlineDeactive -= OnOutlineDeactive;
+        CoreGameSignals.OnInstantiateObjectProductionTable -= InstantiateObject;
+        
+        CoreUISignals.OnProductionTable_CanvasIsActive -= OnCanvasIsActive;
+        CoreUISignals.OnProductionTable_EquipmentListPanelIsActive -= OnEquipmentListPanelIsActive;
+        CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive -= OnForgingSliderPanelIsActive;
+    }
+
+    #endregion
+    
+
+    private void Awake()
+    {
+        outline = GetComponent<Outline>();
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+
+   
+    
     
 }

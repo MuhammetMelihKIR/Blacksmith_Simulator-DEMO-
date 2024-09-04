@@ -7,14 +7,6 @@ using UnityEngine.Serialization;
 
 public class CoreGameSignals : MonoBehaviour
 {   
-    public UnityAction<bool> OnInteractObjectControl = delegate { };
-    public UnityAction OnInteractObject = delegate { };
-    public UnityAction<ITakeable> OnTakeableObjectDetected = delegate { };
-    public UnityAction OnOutlineDeactive = delegate { };
-    public UnityAction<GameObject> OnInstantiateObjectProductionTable = delegate { };
-    
-    
-    
     #region Singleton
     private static CoreGameSignals _instance;
     public static CoreGameSignals Instance { get { return _instance; }
@@ -32,7 +24,19 @@ public class CoreGameSignals : MonoBehaviour
         
     }
     #endregion
+
     
+    public static UnityAction<bool> OnInteractObjectControl = delegate { };
+    
+    public static UnityAction OnInteractObject = delegate { };
+    
+    public static UnityAction<ITakeable> OnTakeableObjectDetected = delegate { };
+    
+    public static UnityAction OnOutlineDeactive = delegate { };
+    
+    public static UnityAction<GameObject> OnInstantiateObjectProductionTable = delegate { };
+    
+    public static UnityAction<bool> OnPlayerCameraChange = delegate { };
     
    
 }

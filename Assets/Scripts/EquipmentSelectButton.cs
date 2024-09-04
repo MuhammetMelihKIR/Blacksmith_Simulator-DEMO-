@@ -22,7 +22,7 @@ public class EquipmentSelectButton : MonoBehaviour
     
     public void GetPrefab()
     {
-        CoreGameSignals.Instance.OnInstantiateObjectProductionTable?.Invoke(blackSmithObjectSO.prefab);
+        CoreGameSignals.OnInstantiateObjectProductionTable?.Invoke(blackSmithObjectSO.prefab);
     }
     
     
