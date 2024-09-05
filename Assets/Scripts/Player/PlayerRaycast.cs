@@ -23,12 +23,7 @@ public class PlayerRaycast : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
             {
-                CoreGameSignals.OnTakeableObjectDetected?.Invoke(takeable);
-            }
-            else if (hit.collider.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
-            {
-                getInteractable.GetInteract();
-                print("Interact");
+                CoreGameSignals.OnTakeable_ObjectDetected?.Invoke(takeable);
             }
         } 
     }

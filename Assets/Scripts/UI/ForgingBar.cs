@@ -16,15 +16,13 @@ public class ForgingBar : MonoBehaviour
 
     private void Update()
     {
-        // Hareketli çizginin bar içinde sağa sola hareket etmesi
         MoveLine();
-
-        // Space tuşuna basılma kontrolü
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Eğer hareketli çizgi yeşil bölgenin içindeyse
             if (IsInGreenZone())
             {
+                CoreGameSignals.OnProductionTable_HammerHit?.Invoke();
                 Debug.Log("Correct Timing! Moving the green zone...");
                 MoveGreenZone();
             }

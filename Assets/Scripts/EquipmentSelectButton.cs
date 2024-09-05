@@ -20,9 +20,9 @@ public class EquipmentSelectButton : MonoBehaviour
         equipmentNameText.text = blackSmithObjectSO.ObjectName;
     }
     
-    public void GetPrefab()
+    public void GetPrefab() //BUTTON CLICK
     {
-        CoreGameSignals.OnInstantiateObjectProductionTable?.Invoke(blackSmithObjectSO.prefab);
+        CoreGameSignals.OnProductionTable_InstantiateObject?.Invoke(blackSmithObjectSO);
     }
     
     

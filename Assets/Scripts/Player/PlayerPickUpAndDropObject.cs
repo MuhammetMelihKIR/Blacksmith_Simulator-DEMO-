@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerPickUpAndDropObject : MonoBehaviour
 {
     #region References
-    
     [Header("References")]
     [SerializeField] private Transform pickUpPoint;
     [SerializeField] private List<GameObject> pickUpObjectList= new List<GameObject>();
@@ -17,15 +16,12 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     #endregion
     private void OnEnable()
     { 
-        CoreGameSignals.OnTakeableObjectDetected += HandleTakeableObject;
-        
+        CoreGameSignals.OnTakeable_ObjectDetected += HandleTakeableObject;
     }
-
     private void OnDisable()
     {
-        CoreGameSignals.OnTakeableObjectDetected -= HandleTakeableObject;
+        CoreGameSignals.OnTakeable_ObjectDetected -= HandleTakeableObject;
     }
-    
     public BlackSmithObjectSO GetBlackSmithObjectSO()
     {
         return blackSmithObjectSO;
@@ -42,7 +38,6 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
             TryDropObject(takeable);
         }
     }
-
     private void PickUpNewObject(ITakeable takeable)
     {
         if (blackSmithObjectSO == null)

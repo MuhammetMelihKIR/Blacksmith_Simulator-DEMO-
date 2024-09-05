@@ -25,18 +25,36 @@ public class CoreGameSignals : MonoBehaviour
     }
     #endregion
 
+    // PLAYER
     
-    public static UnityAction<bool> OnInteractObjectControl = delegate { };
+    public static UnityAction<bool> OnInteractObjectControl = delegate { }; // PlAYER TRIGGER CHECK
+    public static UnityAction OnInteractObject = delegate { }; // PLAYER INTERACT
+    public static UnityAction<bool> OnPlayerCameraChange = delegate { }; // PLAYER CAMERA CHANGE
+    public static UnityAction<CursorLockMode> OnCursorLockState = delegate { }; // CURSOR LOCK
+    public static UnityAction<bool> OnPlayerCanMove = delegate { }; // PLAYER CAN MOVE
     
-    public static UnityAction OnInteractObject = delegate { };
+    // OUTLINE
     
-    public static UnityAction<ITakeable> OnTakeableObjectDetected = delegate { };
+    public static UnityAction OnOutline_Deactive = delegate { }; // OUTLINE DEACTIVE
     
-    public static UnityAction OnOutlineDeactive = delegate { };
+    // INTERFACE
     
-    public static UnityAction<GameObject> OnInstantiateObjectProductionTable = delegate { };
+    public static UnityAction<ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
     
-    public static UnityAction<bool> OnPlayerCameraChange = delegate { };
+    // PRODUCTION TABLE
+    
+    public static UnityAction<BlackSmithObjectSO> OnProductionTable_InstantiateObject = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
+    public static UnityAction OnProductionTable_HammerHit = delegate { }; // PRODUCTION TABLE HAMMER HIT
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
    
 }

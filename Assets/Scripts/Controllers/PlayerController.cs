@@ -53,9 +53,8 @@ public class PlayerController : MonoBehaviour
     {
         playerInput.Enable();
         CoreGameSignals.OnInteractObjectControl += OnIsTrigger;
-        
-        CoreUISignals.OnProductionTable_CanvasIsActive += OnPlayerCanMove;
-
+        CoreGameSignals.OnCursorLockState+= OnCursorLockState;
+        CoreGameSignals.OnPlayerCanMove += OnPlayerCanMove;
     }
     
     private void OnIsTrigger(bool isTrigger)
@@ -65,7 +64,12 @@ public class PlayerController : MonoBehaviour
     
     private void OnPlayerCanMove(bool canMove)
     {
-       playerCanMove = !canMove;
+       playerCanMove = canMove;
+    }
+    
+    private void OnCursorLockState(CursorLockMode mode)
+    {
+        Cursor.lockState = mode;
     }
 
 
@@ -110,7 +114,7 @@ public class PlayerController : MonoBehaviour
     {
         if (lockCursor)
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
         }
 
         if (crosshair)
@@ -123,6 +127,8 @@ public class PlayerController : MonoBehaviour
             crosshairObject.gameObject.SetActive(false);
         }
     }
+    
+    
 
     void FixedUpdate()
     {
