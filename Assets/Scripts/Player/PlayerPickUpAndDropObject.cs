@@ -27,22 +27,22 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
         return blackSmithObjectSO;
     }
 
-    private void HandleTakeableObject(ITakeable takeable)
+    private void HandleTakeableObject(BlackSmithObjectSO smithObjectSo,ITakeable takeable)
     {
         if (pickUpObjectList.Count <= 0)
         {
-            PickUpNewObject(takeable);
+            PickUpNewObject(smithObjectSo,takeable);
         }
         else
         {
-            TryDropObject(takeable);
+            TryDropObject(smithObjectSo,takeable);
         }
     }
-    private void PickUpNewObject(ITakeable takeable)
+    private void PickUpNewObject(BlackSmithObjectSO smithObjectSo,ITakeable takeable)
     {
         if (blackSmithObjectSO == null)
         { 
-            blackSmithObjectSO = takeable.GetBlackSmithObjectSO();
+            blackSmithObjectSO = smithObjectSo;
             takeable.GetObject();
             
             sampleObject = Instantiate(takeable.GetPrefab());
@@ -55,9 +55,9 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
         }
     }
 
-    private void TryDropObject(ITakeable takeable)
+    private void TryDropObject(BlackSmithObjectSO smithObjectSo,ITakeable takeable)
     {
-        if (blackSmithObjectSO == takeable.GetBlackSmithObjectSO() )
+        if (blackSmithObjectSO == smithObjectSo )
         {
             takeable.GiveObject();
             Destroy(pickUpObjectList[0]);
@@ -65,5 +65,8 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
             blackSmithObjectSO = null;
         }
     }
+
+
+    
     
 }

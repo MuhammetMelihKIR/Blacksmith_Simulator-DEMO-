@@ -23,7 +23,7 @@ public class PlayerRaycast : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
             {
-                CoreGameSignals.OnTakeable_ObjectDetected?.Invoke(takeable);
+                CoreGameSignals.OnTakeable_ObjectDetected?.Invoke(takeable.GetBlackSmithObjectSO(), takeable);
             }
         } 
     }

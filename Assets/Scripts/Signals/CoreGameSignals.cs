@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -39,12 +40,16 @@ public class CoreGameSignals : MonoBehaviour
     
     // INTERFACE
     
-    public static UnityAction<ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
+    public static UnityAction<BlackSmithObjectSO,ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
     
     // PRODUCTION TABLE
     
     public static UnityAction<BlackSmithObjectSO> OnProductionTable_InstantiateObject = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
     public static UnityAction OnProductionTable_HammerHit = delegate { }; // PRODUCTION TABLE HAMMER HIT
+    public static UnityAction OnProductionTable_TakeObject = delegate { }; // PRODUCTION TABLE TAKE OBJECT
+    
+    // OvenManger
+    
     
     
     
