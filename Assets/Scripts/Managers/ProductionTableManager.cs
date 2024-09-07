@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class ProductionTableManager : MonoBehaviour, ITakeable
 {
-    public PlayerPickUpAndDropObject playerPickUpAndDropObject;
+    [SerializeField] private PlayerPickUpAndDropObject playerPickUpAndDropObject;
     
-    [SerializeField] private Material prefabMaterial;
+    [Header("FORGING")]
     [SerializeField] private Transform instantiatePoint;
     [SerializeField] private List<GameObject> forgingList = new List<GameObject>();
-    [SerializeField] private List<EquipmentSelectButton> equipmentList  = new List<EquipmentSelectButton>();
-    private BlackSmithObjectSO blackSmithObjectSO;
+    [SerializeField] private List<Button> buttonList  = new List<Button>();
+    [SerializeField] private BlackSmithObjectSO blackSmithObjectSO;
     
     private bool isInstantiated = false;
     private int hammerHitNumber;
@@ -29,12 +29,6 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     private Outline outline;
 
     #region IGetInteractable INTERFACE
-    
-    public void GetInteract()
-    {
-        GET();
-    }
-    
     public void GetObject()
     {
         
@@ -42,17 +36,36 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
 
     public void GiveObject()
     {
-       
+        CoreGameSignals.OnPlayerCameraChange?.Invoke(true);
+        CoreGameSignals.OnPlayerCanMove?.Invoke(false);
+        CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.None);
+        
+        CoreUISignals.OnProductionTable_CanvasIsActive?.Invoke(true);
+        CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(true);
+        CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
+        
+        OnOutlineDeactive();
+        ButtonsCheck();
     }
     
     public GameObject GetPrefab()
     {
-        return null;
+        return blackSmithObjectSO.prefab;
     }
     
     public BlackSmithObjectSO GetBlackSmithObjectSO()
     {
-        return blackSmithObjectSO;
+        BlackSmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
+        
+        foreach (Button button in buttonList)
+        {
+            if (button.GetComponent<EquipmentSelectButton>().GetMeltedToEquipmentSO().inputObject == playerObjectSO)
+            {
+                blackSmithObjectSO= playerObjectSO;
+                return playerObjectSO;
+            }
+        }
+        return null;
     }
 
     public void OutlineActive()
@@ -67,7 +80,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     private void OnEnable()
     {
         CoreGameSignals.OnOutline_Deactive += OnOutlineDeactive;
-        CoreGameSignals.OnProductionTable_InstantiateObject += InstantiateObjectForForging;
+        CoreGameSignals.OnProductionTable_InstantiateObjectForForging += InstantiateObjectForForging;
         CoreGameSignals.OnProductionTable_HammerHit += OnHammerHit;
         
         //UI
@@ -81,32 +94,38 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         outline.enabled = false;
     }
     
-    private void InstantiateObjectForForging(BlackSmithObjectSO SO)
+    private void InstantiateObjectForForging(BlackSmithObjectSO SO,Material material)
+    {
+        blackSmithObjectSO = SO;
+        InstantiateObject();
+        forgingObject.GetComponentInChildren<MeshRenderer>().material = material;
+      
+    }
+
+    private void InstantiateObject()
     {
         if (forgingList.Count >=1)
         {
             Destroy( forgingList[0]);
             forgingList.RemoveAt(0);
         }
-        blackSmithObjectSO = SO;
         GameObject prefab = blackSmithObjectSO.prefab;
         forgingObject = Instantiate(prefab, instantiatePoint.position , prefab.transform.rotation);
         forgingObject.transform.parent = instantiatePoint;
-        forgingObject.GetComponentInChildren<MeshRenderer>().material = prefabMaterial;
-        
         forgingList.Add(forgingObject);
-        
         isInstantiated = true;
     }
     private void OnHammerHit()
     {
-        if (hammerHitNumber>=5)
+        if (hammerHitNumber==1)
         {
             CoreGameSignals.OnPlayerCameraChange?.Invoke(false);
             CoreGameSignals.OnPlayerCanMove?.Invoke(true);
             CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
             CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
             hammerHitNumber = 0;
+            InstantiateObject();           
+            
         }
         hammerHitNumber++;
     }
@@ -133,7 +152,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     private void OnDisable()
     {
         CoreGameSignals.OnOutline_Deactive -= OnOutlineDeactive;
-        CoreGameSignals.OnProductionTable_InstantiateObject -= InstantiateObjectForForging;
+        CoreGameSignals.OnProductionTable_InstantiateObjectForForging -= InstantiateObjectForForging;
         CoreGameSignals.OnProductionTable_HammerHit -= OnHammerHit;
         
         //UI
@@ -144,32 +163,22 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
 
     #endregion
 
-    private void GET()
-    {
-        CoreGameSignals.OnPlayerCameraChange?.Invoke(true);
-        CoreGameSignals.OnPlayerCanMove?.Invoke(false);
-        CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.None);
-        
-        CoreUISignals.OnProductionTable_CanvasIsActive?.Invoke(true);
-        CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(true);
-        CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
-        
-        OnOutlineDeactive();
-    }
+    
     private void Awake()
     {
         outline = GetComponent<Outline>();
         
-        equipmentListCloseButton.onClick.AddListener(CloseEquipmentPanel);
+        equipmentListCloseButton.onClick.AddListener(EquipmentPanelOkButton);
         productionTableExitButton.onClick.AddListener(ProductionTableExit);
     }
     
-    private void CloseEquipmentPanel() // CLOSE BUTTON CLICK
+    private void EquipmentPanelOkButton() // OK BUTTON CLICK
     {
         if (!isInstantiated)  return;
         CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(false);
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(true);
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
+        CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove?.Invoke();
     }
 
     private void ProductionTableExit() // EXIT BUTTON CLICK
@@ -180,10 +189,22 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         Destroy(forgingObject);
         forgingList.Remove(forgingObject);
     }
-    
-    private void EquipmentListItemCheck()
+
+    private void ButtonsCheck()
     {
-        playerPickUpAndDropObject.GetBlackSmithObjectSO();
+        BlackSmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
+        
+        foreach (Button button in buttonList)
+        {
+            if (button.GetComponent<EquipmentSelectButton>().GetMeltedToEquipmentSO().inputObject == playerObjectSO)
+            {
+                button.interactable = true;
+            }
+            else
+            {
+                button.interactable = false;
+            }
+        }
     }
     
 }

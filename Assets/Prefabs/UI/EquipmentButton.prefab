@@ -60,9 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7eb1172b4def8346821b914e512655f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackSmithObjectSO: {fileID: 0}
+  meltedToEquipmentSO: {fileID: 0}
   equipmentSprite: {fileID: 810023214893137256}
   equipmentNameText: {fileID: 4786347254880536378}
+  prefabMaterial: {fileID: 2100000, guid: ba14955c81e48b941b27da9b66253148, type: 2}
 --- !u!114 &2231126130173069581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +89,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.5404422, g: 0.9622642, b: 0.3976148, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 0.6773585, b: 0.6773585, a: 0.7607843}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

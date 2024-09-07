@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerRaycast : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
-    private float rayDistance = .75f;
+    private float rayDistance = 0.75f;
 
     private void OnEnable()
     {
@@ -16,14 +16,14 @@ public class PlayerRaycast : MonoBehaviour
 
     private void DrawRaycast()
     {
-        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0f));
         
-        Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
+        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0f));
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance))
         {
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 0.5f);
             if (hit.collider.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
             {
-                CoreGameSignals.OnTakeable_ObjectDetected?.Invoke(takeable.GetBlackSmithObjectSO(), takeable);
+                CoreGameSignals.OnTakeable_ObjectDetected?.Invoke( takeable);
             }
         } 
     }

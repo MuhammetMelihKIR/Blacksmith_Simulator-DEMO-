@@ -3,7 +3,6 @@
 
   public interface ITakeable
   {
-      void GetInteract();
       void GetObject();
       void GiveObject();
       GameObject GetPrefab();

@@ -4,23 +4,25 @@ using UnityEngine.UI;
 
 public class EquipmentSelectButton : MonoBehaviour
 {
- 
-    [SerializeField] private BlackSmithObjectSO blackSmithObjectSO;
-    
+    [SerializeField] private MeltedToEquipmentSO meltedToEquipmentSO;
     [Header("REFERENCES")]
     [SerializeField] private Image equipmentSprite;
     [SerializeField] private TextMeshProUGUI equipmentNameText;
-    
+    [SerializeField] private Material prefabMaterial;
+
+    public MeltedToEquipmentSO GetMeltedToEquipmentSO()
+    {
+        return meltedToEquipmentSO; 
+    }
     private void Awake()
     {
-        equipmentSprite.sprite = blackSmithObjectSO.ObjectSprite;
-        equipmentNameText.text = blackSmithObjectSO.ObjectName;
+        equipmentSprite.sprite = meltedToEquipmentSO.outputObject.ObjectSprite;
+        equipmentNameText.text = meltedToEquipmentSO.outputObject.ObjectName;
     }
     
-    public void GetPrefab() //BUTTON CLICK
+    private void GetPrefab() //BUTTON CLICK
     {
-        CoreGameSignals.OnProductionTable_InstantiateObject?.Invoke(blackSmithObjectSO);
+        CoreGameSignals.OnProductionTable_InstantiateObjectForForging?.Invoke(meltedToEquipmentSO.outputObject,prefabMaterial);
     }
-    
     
 }

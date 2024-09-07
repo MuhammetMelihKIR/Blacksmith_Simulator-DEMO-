@@ -12,14 +12,9 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
     private int maxBars = 12;
     private int currentIndex;
     private Outline outline;
-    
 
     #region ITakeable INTERFACE
-
-    public void GetInteract()
-    {
-        
-    }
+    
     public void GetObject()
     {
         DecreaseObject();
@@ -77,8 +72,8 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
         {
             bars[i].SetActive(true);
         }
-        
     }
+    
     private void DecreaseObject()
     {
         if (currentIndex >= 0)
@@ -98,4 +93,5 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
             bar.SetActive(true);
         }
     }
+    
 }

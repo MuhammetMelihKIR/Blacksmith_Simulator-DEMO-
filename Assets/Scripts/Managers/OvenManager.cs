@@ -11,17 +11,11 @@ public class OvenManager : MonoBehaviour, ITakeable
     [SerializeField] private PlayerPickUpAndDropObject playerPickUpAndDropObject;
     public BlackSmithObjectSO blackSmithObjectSO;
     
-    
-    
     #region ITakeable INTERFACE
-
-    public void GetInteract()
-    {
-        
-    }
+    
     public void GetObject()
     {
-        
+        blackSmithObjectSO = null;
     }
 
     public void GiveObject()
@@ -41,7 +35,16 @@ public class OvenManager : MonoBehaviour, ITakeable
     
     public BlackSmithObjectSO GetBlackSmithObjectSO()
     {
-        return playerPickUpAndDropObject.GetBlackSmithObjectSO();
+        foreach (MaterialToMeltedSO obj in materialToMeltedSO)
+        {
+            if (obj.inputMaterial==playerPickUpAndDropObject.GetBlackSmithObjectSO())
+            {
+                blackSmithObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
+                return blackSmithObjectSO;
+            }
+        }
+
+        return blackSmithObjectSO;
     }
 
     #endregion
@@ -73,10 +76,8 @@ public class OvenManager : MonoBehaviour, ITakeable
             if (obj.inputMaterial == playerPickUpAndDropObject.GetBlackSmithObjectSO())
             {
                 blackSmithObjectSO = obj.outputMaterial;
-                
             }
         }
-        
     }
     
 

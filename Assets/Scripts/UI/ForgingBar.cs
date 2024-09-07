@@ -63,7 +63,6 @@ public class ForgingBar : MonoBehaviour
              progressBar.GetComponent<RectTransform>().rect.width / 2 - greenZone.rect.width / 2
         );
         greenZone.localPosition = new Vector3(newX, greenZone.localPosition.y, greenZone.localPosition.z);
-
-        Debug.Log($"Green zone moved to {newX}");
+        
     }
 }

@@ -11,7 +11,10 @@ public class PlayerInteractController : MonoBehaviour
         { 
             CoreGameSignals.OnInteractObjectControl?.Invoke(true);
             takeable.OutlineActive();
-            takeable.GetInteract();
+        }
+        else if(other.gameObject.TryGetComponent<TrashManager>(out TrashManager trashManager))
+        {
+            CoreGameSignals.OnInteractObjectControl?.Invoke(true);
         }
     }
     
@@ -22,6 +25,10 @@ public class PlayerInteractController : MonoBehaviour
             CoreGameSignals.OnInteractObjectControl?.Invoke(false);
             CoreGameSignals.OnOutline_Deactive?.Invoke();
             
+        }
+        else if(other.gameObject.TryGetComponent<TrashManager>(out TrashManager trashManager))
+        {
+            CoreGameSignals.OnInteractObjectControl?.Invoke(false);
         }
     }
 }

@@ -34,17 +34,19 @@ public class CoreGameSignals : MonoBehaviour
     public static UnityAction<CursorLockMode> OnCursorLockState = delegate { }; // CURSOR LOCK
     public static UnityAction<bool> OnPlayerCanMove = delegate { }; // PLAYER CAN MOVE
     
+    public static UnityAction OnPlayerPickUpAndDropObject_PickUpListRemove = delegate { }; // PLAYER PICK UP AND DROP OBJECT
+    
     // OUTLINE
     
     public static UnityAction OnOutline_Deactive = delegate { }; // OUTLINE DEACTIVE
     
     // INTERFACE
     
-    public static UnityAction<BlackSmithObjectSO,ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
+    public static UnityAction<ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
     
     // PRODUCTION TABLE
     
-    public static UnityAction<BlackSmithObjectSO> OnProductionTable_InstantiateObject = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
+    public static UnityAction<BlackSmithObjectSO,Material> OnProductionTable_InstantiateObjectForForging = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
     public static UnityAction OnProductionTable_HammerHit = delegate { }; // PRODUCTION TABLE HAMMER HIT
     public static UnityAction OnProductionTable_TakeObject = delegate { }; // PRODUCTION TABLE TAKE OBJECT
     
