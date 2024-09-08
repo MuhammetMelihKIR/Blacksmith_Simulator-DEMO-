@@ -52,7 +52,6 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     {
         if (blackSmithObjectSO == null)
         {
-           
             blackSmithObjectSO = takeable.GetBlackSmithObjectSO();
             sampleObject = Instantiate(takeable.GetPrefab());
             sampleObject.transform.position = pickUpPoint.position;
@@ -61,7 +60,6 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
             pickUpObjectList.Add(sampleObject);
             
             takeable.GetObject();
-            
         }
     }
 
@@ -76,20 +74,5 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
             blackSmithObjectSO = null;
         }
     }
-
-    private void InstantiateObject(BlackSmithObjectSO objectSO )
-    {
-        blackSmithObjectSO = objectSO;
-        sampleObject = Instantiate(objectSO.prefab);
-        sampleObject.transform.position = pickUpPoint.position;
-        sampleObject.transform.rotation = pickUpPoint.rotation;
-        sampleObject.transform.parent = pickUpPoint;
-
-        pickUpObjectList.Add(sampleObject);
-        
-    }
-
-
-    
     
 }

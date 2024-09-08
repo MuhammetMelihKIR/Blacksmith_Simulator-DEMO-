@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ProductionTableManager : MonoBehaviour, ITakeable
 {
+    [SerializeField] private ProductionState currentState;
+    
     [SerializeField] private PlayerPickUpAndDropObject playerPickUpAndDropObject;
     
     [Header("FORGING")]
@@ -15,9 +14,10 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     [SerializeField] private List<Button> buttonList  = new List<Button>();
     [SerializeField] private BlackSmithObjectSO blackSmithObjectSO;
     
-    private bool isInstantiated = false;
     private int hammerHitNumber;
     private GameObject forgingObject;
+    private Outline outline;
+    private bool isBlackSmithObject = false;
 
     [Header("UI")] 
     [SerializeField] private Canvas productionCanvas;
@@ -26,16 +26,21 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     [SerializeField] private Button equipmentListCloseButton;
     [SerializeField] private Button productionTableExitButton;
     
-    private Outline outline;
 
     #region IGetInteractable INTERFACE
     public void GetObject()
     {
-        
+        if (currentState != ProductionState.complete) return;
+        Destroy(forgingObject);
+        forgingList.RemoveAt(0);
+        blackSmithObjectSO = null;
+        currentState = ProductionState.select;
     }
-
+    
     public void GiveObject()
     {
+        if (currentState != ProductionState.select || !isBlackSmithObject) return;
+       
         CoreGameSignals.OnPlayerCameraChange?.Invoke(true);
         CoreGameSignals.OnPlayerCanMove?.Invoke(false);
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.None);
@@ -46,6 +51,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         
         OnOutlineDeactive();
         ButtonsCheck();
+        
     }
     
     public GameObject GetPrefab()
@@ -62,9 +68,11 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
             if (button.GetComponent<EquipmentSelectButton>().GetMeltedToEquipmentSO().inputObject == playerObjectSO)
             {
                 blackSmithObjectSO= playerObjectSO;
+                isBlackSmithObject = true;
                 return playerObjectSO;
             }
         }
+        isBlackSmithObject = false;
         return null;
     }
 
@@ -96,6 +104,8 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     
     private void InstantiateObjectForForging(BlackSmithObjectSO SO,Material material)
     {
+        if (currentState != ProductionState.select) return;
+        
         blackSmithObjectSO = SO;
         InstantiateObject();
         forgingObject.GetComponentInChildren<MeshRenderer>().material = material;
@@ -113,21 +123,20 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         forgingObject = Instantiate(prefab, instantiatePoint.position , prefab.transform.rotation);
         forgingObject.transform.parent = instantiatePoint;
         forgingList.Add(forgingObject);
-        isInstantiated = true;
     }
     private void OnHammerHit()
     {
-        if (hammerHitNumber==1)
+        hammerHitNumber++;
+        if (hammerHitNumber>=1)
         {
             CoreGameSignals.OnPlayerCameraChange?.Invoke(false);
             CoreGameSignals.OnPlayerCanMove?.Invoke(true);
             CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
             CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
             hammerHitNumber = 0;
-            InstantiateObject();           
-            
+            InstantiateObject();
+            currentState = ProductionState.complete;
         }
-        hammerHitNumber++;
     }
     
     #region UI 
@@ -148,6 +157,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     }
 
     #endregion
+   
 
     private void OnDisable()
     {
@@ -162,7 +172,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     }
 
     #endregion
-
+    
     
     private void Awake()
     {
@@ -170,11 +180,14 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         
         equipmentListCloseButton.onClick.AddListener(EquipmentPanelOkButton);
         productionTableExitButton.onClick.AddListener(ProductionTableExit);
+        currentState = ProductionState.select;
     }
     
     private void EquipmentPanelOkButton() // OK BUTTON CLICK
     {
-        if (!isInstantiated)  return;
+        if (currentState != ProductionState.select) return;
+        
+        currentState = ProductionState.forge;
         CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(false);
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(true);
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
@@ -186,11 +199,12 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
         CoreGameSignals.OnPlayerCameraChange?.Invoke(false);
         CoreGameSignals.OnPlayerCanMove?.Invoke(true);
+        
         Destroy(forgingObject);
         forgingList.Remove(forgingObject);
     }
 
-    private void ButtonsCheck()
+    private void ButtonsCheck() // BUTTONS INTERACTABLE CHECK
     {
         BlackSmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
         

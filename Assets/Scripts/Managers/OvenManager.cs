@@ -56,17 +56,14 @@ public class OvenManager : MonoBehaviour, ITakeable
     {
         CoreGameSignals.OnOutline_Deactive += OnOutlineDeactive;
     }
-    
     private void OnOutlineDeactive()
     {
         outline.enabled = false;
     }
-
     private void OnDisable()
     {
         CoreGameSignals.OnOutline_Deactive -= OnOutlineDeactive;
     }
-
     #endregion
 
     private void MeltToMaterial()
@@ -79,8 +76,6 @@ public class OvenManager : MonoBehaviour, ITakeable
             }
         }
     }
-    
-
     private void Awake()
     {
         outline = GetComponent<Outline>();
