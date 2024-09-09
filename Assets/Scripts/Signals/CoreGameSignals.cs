@@ -52,6 +52,9 @@ public class CoreGameSignals : MonoBehaviour
     
     // OvenManger
     
+    public static UnityAction<bool> OnOvenManager_IsMelted = delegate { }; // OVEN MANAGER
+    
+    
     
     
     

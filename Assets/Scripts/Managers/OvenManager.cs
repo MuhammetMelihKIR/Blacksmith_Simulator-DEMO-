@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class OvenManager : MonoBehaviour, ITakeable
 {
+    [SerializeField] private OvenManagerState currentState;
     private Outline outline;
     
     [SerializeField] private MaterialToMeltedSO[] materialToMeltedSO;
@@ -15,16 +16,23 @@ public class OvenManager : MonoBehaviour, ITakeable
     
     public void GetObject()
     {
+        if (currentState != OvenManagerState.melted) return;
+        
         blackSmithObjectSO = null;
+        currentState = OvenManagerState.start;
     }
 
     public void GiveObject()
     {
+        if (currentState != OvenManagerState.start) return;
+        
         MeltToMaterial();
     }
     
     public GameObject GetPrefab()
     {
+        if (currentState == OvenManagerState.melting) return null;
+       
         return blackSmithObjectSO.prefab;
     }
     
@@ -35,6 +43,8 @@ public class OvenManager : MonoBehaviour, ITakeable
     
     public BlackSmithObjectSO GetBlackSmithObjectSO()
     {
+        if (currentState == OvenManagerState.melting) return null;
+        
         foreach (MaterialToMeltedSO obj in materialToMeltedSO)
         {
             if (obj.inputMaterial==playerPickUpAndDropObject.GetBlackSmithObjectSO())
@@ -73,11 +83,21 @@ public class OvenManager : MonoBehaviour, ITakeable
             if (obj.inputMaterial == playerPickUpAndDropObject.GetBlackSmithObjectSO())
             {
                 blackSmithObjectSO = obj.outputMaterial;
+                currentState = OvenManagerState.melting;
+                CoreGameSignals.OnOvenManager_IsMelted?.Invoke(false);
             }
         }
     }
     private void Awake()
     {
         outline = GetComponent<Outline>();
+        currentState = OvenManagerState.start;
     }
+    
+    public OvenManagerState CurrentState(OvenManagerState state)
+    {
+        currentState = state;
+        return currentState;
+    }
+    
 }
