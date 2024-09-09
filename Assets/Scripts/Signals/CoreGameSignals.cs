@@ -46,9 +46,8 @@ public class CoreGameSignals : MonoBehaviour
     
     // PRODUCTION TABLE
     
-    public static UnityAction<BlackSmithObjectSO,Material> OnProductionTable_InstantiateObjectForForging = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
+    public static UnityAction<BlacksmithObjectSO,Material> OnProductionTable_InstantiateObjectForForging = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
     public static UnityAction OnProductionTable_HammerHit = delegate { }; // PRODUCTION TABLE HAMMER HIT
-    public static UnityAction OnProductionTable_TakeObject = delegate { }; // PRODUCTION TABLE TAKE OBJECT
     
     // OvenManger
     

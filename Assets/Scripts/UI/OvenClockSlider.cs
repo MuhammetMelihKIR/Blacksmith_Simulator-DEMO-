@@ -37,8 +37,6 @@ public class OvenClockSlider : MonoBehaviour
             if (progressBar.value >= 1f)
             {
                 OnProgressComplete();
-                CoreGameSignals.OnOvenManager_IsMelted?.Invoke(true);
-                
             }
         }
     }

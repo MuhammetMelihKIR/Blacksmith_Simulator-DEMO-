@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class MaterialToMeltedSO : ScriptableObject
 {
-    public BlackSmithObjectSO inputMaterial;
-    public BlackSmithObjectSO outputMaterial;
+    public BlacksmithObjectSO inputMaterial;
+    public BlacksmithObjectSO outputMaterial;
     public float meltTime;
     
 }

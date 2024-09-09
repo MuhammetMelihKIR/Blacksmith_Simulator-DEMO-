@@ -6,6 +6,6 @@
       void GetObject();
       void GiveObject();
       GameObject GetPrefab();
-      BlackSmithObjectSO GetBlackSmithObjectSO();
+      BlacksmithObjectSO GetBlackSmithObjectSO();
       void OutlineActive();
   }

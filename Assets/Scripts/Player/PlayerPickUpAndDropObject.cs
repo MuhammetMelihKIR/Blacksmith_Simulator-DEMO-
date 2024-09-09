@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerPickUpAndDropObject : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     [SerializeField] private List<GameObject> pickUpObjectList= new List<GameObject>();
     
     private GameObject sampleObject;
-    [SerializeField] private BlackSmithObjectSO blackSmithObjectSO;
+    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     
     #endregion
     private void OnEnable()
@@ -23,7 +24,7 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
 
     private void OnPickUpObjectListRemove()
     {
-        blackSmithObjectSO = null;
+        blacksmithObjectSo = null;
         Destroy(sampleObject);
         pickUpObjectList.RemoveAt(0);
     }
@@ -32,9 +33,9 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
         CoreGameSignals.OnTakeable_ObjectDetected -= HandleTakeableObject;
         CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove -= OnPickUpObjectListRemove;
     }
-    public BlackSmithObjectSO GetBlackSmithObjectSO()
+    public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
-        return blackSmithObjectSO;
+        return blacksmithObjectSo;
     }
 
     private void HandleTakeableObject(ITakeable takeable)
@@ -50,9 +51,9 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     }
     private void PickUpNewObject(ITakeable takeable)
     {
-        if (blackSmithObjectSO == null)
+        if (blacksmithObjectSo == null)
         {
-            blackSmithObjectSO = takeable.GetBlackSmithObjectSO();
+            blacksmithObjectSo = takeable.GetBlackSmithObjectSO();
             if (takeable.GetPrefab()!=null)
             {
                 sampleObject = Instantiate(takeable.GetPrefab());
@@ -68,13 +69,13 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
 
     private void TryDropObject(ITakeable takeable)
     {
-        if (blackSmithObjectSO == takeable.GetBlackSmithObjectSO())
+        if (blacksmithObjectSo == takeable.GetBlackSmithObjectSO())
         {
             takeable.GiveObject();
             
             Destroy(pickUpObjectList[0]);
             pickUpObjectList.RemoveAt(0);
-            blackSmithObjectSO = null;
+            blacksmithObjectSo = null;
         }
     }
     

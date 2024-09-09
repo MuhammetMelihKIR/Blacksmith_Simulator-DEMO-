@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ProductionTableManager : MonoBehaviour, ITakeable
@@ -12,7 +13,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     [SerializeField] private Transform instantiatePoint;
     [SerializeField] private List<GameObject> forgingList = new List<GameObject>();
     [SerializeField] private List<Button> buttonList  = new List<Button>();
-    [SerializeField] private BlackSmithObjectSO blackSmithObjectSO;
+    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     
     private int hammerHitNumber;
     private GameObject forgingObject;
@@ -33,7 +34,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         if (currentState != ProductionState.complete) return;
         Destroy(forgingObject);
         forgingList.RemoveAt(0);
-        blackSmithObjectSO = null;
+        blacksmithObjectSo = null;
         currentState = ProductionState.select;
     }
     
@@ -56,18 +57,18 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     
     public GameObject GetPrefab()
     {
-        return blackSmithObjectSO.prefab;
+        return blacksmithObjectSo.prefab;
     }
     
-    public BlackSmithObjectSO GetBlackSmithObjectSO()
+    public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
-        BlackSmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
+        BlacksmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
         
         foreach (Button button in buttonList)
         {
             if (button.GetComponent<EquipmentSelectButton>().GetMeltedToEquipmentSO().inputObject == playerObjectSO)
             {
-                blackSmithObjectSO= playerObjectSO;
+                blacksmithObjectSo= playerObjectSO;
                 isBlackSmithObject = true;
                 return playerObjectSO;
             }
@@ -102,11 +103,11 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         outline.enabled = false;
     }
     
-    private void InstantiateObjectForForging(BlackSmithObjectSO SO,Material material)
+    private void InstantiateObjectForForging(BlacksmithObjectSO SO,Material material)
     {
         if (currentState != ProductionState.select) return;
         
-        blackSmithObjectSO = SO;
+        blacksmithObjectSo = SO;
         InstantiateObject();
         forgingObject.GetComponentInChildren<MeshRenderer>().material = material;
       
@@ -119,7 +120,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
             Destroy( forgingList[0]);
             forgingList.RemoveAt(0);
         }
-        GameObject prefab = blackSmithObjectSO.prefab;
+        GameObject prefab = blacksmithObjectSo.prefab;
         forgingObject = Instantiate(prefab, instantiatePoint.position , prefab.transform.rotation);
         forgingObject.transform.parent = instantiatePoint;
         forgingList.Add(forgingObject);
@@ -206,7 +207,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
 
     private void ButtonsCheck() // BUTTONS INTERACTABLE CHECK
     {
-        BlackSmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
+        BlacksmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
         
         foreach (Button button in buttonList)
         {

@@ -8700,6 +8700,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 11d7782b1089a0e48ae2a6df090e5618, type: 2}
   playerPickUpAndDropObject: {fileID: 2055911888904419313}
   blackSmithObjectSO: {fileID: 0}
+  ovenClockSlider: {fileID: 8531216036252920719}
 --- !u!65 &943717747
 BoxCollider:
   m_ObjectHideFlags: 0

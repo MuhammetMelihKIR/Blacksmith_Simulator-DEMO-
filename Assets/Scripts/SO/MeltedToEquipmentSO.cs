@@ -5,8 +5,8 @@ using UnityEngine;
 public class MeltedToEquipmentSO : ScriptableObject
 {
     [Header("Forging")]
-    public BlackSmithObjectSO inputObject;
-    public BlackSmithObjectSO outputObject;
+    public BlacksmithObjectSO inputObject;
+    public BlacksmithObjectSO outputObject;
     public float forgingTime;
 
 }

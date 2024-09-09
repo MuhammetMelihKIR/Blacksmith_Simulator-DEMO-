@@ -1,24 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class OvenManager : MonoBehaviour, ITakeable
 {
     [SerializeField] private OvenManagerState currentState;
-    private Outline outline;
-    
     [SerializeField] private MaterialToMeltedSO[] materialToMeltedSO;
     [SerializeField] private PlayerPickUpAndDropObject playerPickUpAndDropObject;
-    public BlackSmithObjectSO blackSmithObjectSO;
+    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    
+    [Header("UI")]
+    [SerializeField] private GameObject ovenClockSlider;
+    
+    private Outline outline;
     
     #region ITakeable INTERFACE
     
     public void GetObject()
     {
         if (currentState != OvenManagerState.melted) return;
-        
-        blackSmithObjectSO = null;
+        CoreGameSignals.OnOvenManager_IsMelted?.Invoke(true);
+        blacksmithObjectSo = null;
+        OvenClockSliderSetActive(false);
         currentState = OvenManagerState.start;
     }
 
@@ -33,7 +35,7 @@ public class OvenManager : MonoBehaviour, ITakeable
     {
         if (currentState == OvenManagerState.melting) return null;
        
-        return blackSmithObjectSO.prefab;
+        return blacksmithObjectSo.prefab;
     }
     
     public void OutlineActive()
@@ -41,7 +43,7 @@ public class OvenManager : MonoBehaviour, ITakeable
        outline.enabled = true;
     }
     
-    public BlackSmithObjectSO GetBlackSmithObjectSO()
+    public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
         if (currentState == OvenManagerState.melting) return null;
         
@@ -49,12 +51,12 @@ public class OvenManager : MonoBehaviour, ITakeable
         {
             if (obj.inputMaterial==playerPickUpAndDropObject.GetBlackSmithObjectSO())
             {
-                blackSmithObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
-                return blackSmithObjectSO;
+                blacksmithObjectSo = playerPickUpAndDropObject.GetBlackSmithObjectSO();
+                return blacksmithObjectSo;
             }
         }
 
-        return blackSmithObjectSO;
+        return blacksmithObjectSo;
     }
 
     #endregion
@@ -82,8 +84,9 @@ public class OvenManager : MonoBehaviour, ITakeable
         {
             if (obj.inputMaterial == playerPickUpAndDropObject.GetBlackSmithObjectSO())
             {
-                blackSmithObjectSO = obj.outputMaterial;
+                blacksmithObjectSo = obj.outputMaterial;
                 currentState = OvenManagerState.melting;
+                OvenClockSliderSetActive(true);
                 CoreGameSignals.OnOvenManager_IsMelted?.Invoke(false);
             }
         }
@@ -92,12 +95,18 @@ public class OvenManager : MonoBehaviour, ITakeable
     {
         outline = GetComponent<Outline>();
         currentState = OvenManagerState.start;
+        OvenClockSliderSetActive(false);
     }
     
     public OvenManagerState CurrentState(OvenManagerState state)
     {
         currentState = state;
         return currentState;
+    }
+    
+    private void OvenClockSliderSetActive(bool isActive)
+    {
+        ovenClockSlider.SetActive(isActive);
     }
     
 }

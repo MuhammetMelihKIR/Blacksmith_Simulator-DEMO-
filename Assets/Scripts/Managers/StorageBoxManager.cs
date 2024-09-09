@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class StorageBoxManager : MonoBehaviour,ITakeable
 {
     
     [SerializeField] private List<GameObject> bars = new List<GameObject>();
-    [SerializeField] private BlackSmithObjectSO blackSmithObjectSO;
+    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     private int maxBars = 12;
     private int currentIndex;
     private Outline outline;
@@ -27,12 +28,12 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
     
     public GameObject GetPrefab()
     {
-        return blackSmithObjectSO.prefab;
+        return blacksmithObjectSo.prefab;
     }
     
-    public BlackSmithObjectSO GetBlackSmithObjectSO()
+    public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
-        return blackSmithObjectSO;
+        return blacksmithObjectSo;
     }
     
     public void OutlineActive()
