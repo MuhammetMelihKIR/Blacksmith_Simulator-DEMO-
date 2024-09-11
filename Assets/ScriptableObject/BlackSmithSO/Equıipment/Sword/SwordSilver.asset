@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: SwordSilver
   m_EditorClassIdentifier: 
   prefab: {fileID: 8183631148032897405, guid: 2120f5792a168ae4c8d54a61a20b9924, type: 3}
-  ObjectName: Silver Sword
-  ObjectSprite: {fileID: 21300000, guid: 3eef3857b62d77c4b874aed8b68f4863, type: 3}
+  purchasePrice: 0
+  salesPrice: 200
+  objectName: Silver Sword
+  objectSprite: {fileID: 21300000, guid: 3eef3857b62d77c4b874aed8b68f4863, type: 3}

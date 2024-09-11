@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: SwordGold
   m_EditorClassIdentifier: 
   prefab: {fileID: 3797007471495547089, guid: 15297fa9196242847829f81e488844d2, type: 3}
-  ObjectName: Gold Sword
-  ObjectSprite: {fileID: 21300000, guid: be7cc31ebe3bef342b144505ab5e3055, type: 3}
+  purchasePrice: 0
+  salesPrice: 300
+  objectName: Gold Sword
+  objectSprite: {fileID: 21300000, guid: be7cc31ebe3bef342b144505ab5e3055, type: 3}

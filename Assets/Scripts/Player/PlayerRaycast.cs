@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerRaycast : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
-    private float rayDistance = 0.75f;
+    private float rayDistance = 2f;
 
     private void OnEnable()
     {
@@ -24,6 +24,11 @@ public class PlayerRaycast : MonoBehaviour
             if (hit.collider.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
             {
                 CoreGameSignals.OnTakeable_ObjectDetected?.Invoke( takeable);
+            }
+            else if (hit.collider.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
+            {
+                CoreGameSignals.OnGetInteractable_ObjectDetected?.Invoke(getInteractable);
+                getInteractable.GetInteract();
             }
         } 
     }

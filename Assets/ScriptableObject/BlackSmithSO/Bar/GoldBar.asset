@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: GoldBar
   m_EditorClassIdentifier: 
   prefab: {fileID: 4904470846136886088, guid: 7cb3be54e52bad04e99a357316670e88, type: 3}
+  purchasePrice: 40
+  salesPrice: 0
+  ObjectName: 
+  ObjectSprite: {fileID: 0}

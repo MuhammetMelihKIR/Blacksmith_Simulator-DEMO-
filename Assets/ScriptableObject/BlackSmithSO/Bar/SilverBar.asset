@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: SilverBar
   m_EditorClassIdentifier: 
   prefab: {fileID: 2717869003492387550, guid: d56a14bac2c798f4c9f750753297c62a, type: 3}
+  purchasePrice: 30
+  salesPrice: 0
+  ObjectName: 
+  ObjectSprite: {fileID: 0}

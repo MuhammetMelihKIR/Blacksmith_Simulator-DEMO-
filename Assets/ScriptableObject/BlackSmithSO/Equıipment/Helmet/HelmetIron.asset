@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: HelmetIron
   m_EditorClassIdentifier: 
   prefab: {fileID: 5723706196341962098, guid: 4f2d7b3d1ba236241b78827a9b8a6a9e, type: 3}
-  ObjectName: Iron Helmet
-  ObjectSprite: {fileID: 21300000, guid: b74a8045baaa4154c9088d05b93c9d5a, type: 3}
+  purchasePrice: 0
+  salesPrice: 50
+  objectName: Iron Helmet
+  objectSprite: {fileID: 21300000, guid: b74a8045baaa4154c9088d05b93c9d5a, type: 3}

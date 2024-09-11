@@ -44,6 +44,8 @@ public class CoreGameSignals : MonoBehaviour
     
     public static UnityAction<ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
     
+    public static UnityAction<IGetInteractable> OnGetInteractable_ObjectDetected = delegate { }; // GET INTERACTABLE INTERFACE CONTROL
+    
     // PRODUCTION TABLE
     
     public static UnityAction<BlacksmithObjectSO,Material> OnProductionTable_InstantiateObjectForForging = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
@@ -52,6 +54,11 @@ public class CoreGameSignals : MonoBehaviour
     // OvenManger
     
     public static UnityAction<bool> OnOvenManager_IsMelted = delegate { }; // OVEN MANAGER
+    
+    // CustomerManager
+    
+    
+    
     
     
     

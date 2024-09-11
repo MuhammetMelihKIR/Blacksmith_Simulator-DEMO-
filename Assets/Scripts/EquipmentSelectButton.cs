@@ -16,8 +16,8 @@ public class EquipmentSelectButton : MonoBehaviour
     }
     private void Awake()
     {
-        equipmentSprite.sprite = meltedToEquipmentSO.outputObject.ObjectSprite;
-        equipmentNameText.text = meltedToEquipmentSO.outputObject.ObjectName;
+        equipmentSprite.sprite = meltedToEquipmentSO.outputObject.objectSprite;
+        equipmentNameText.text = meltedToEquipmentSO.outputObject.objectName;
     }
     
     private void GetPrefab() //BUTTON CLICK

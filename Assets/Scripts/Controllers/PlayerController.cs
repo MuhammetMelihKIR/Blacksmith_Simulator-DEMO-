@@ -87,9 +87,9 @@ public class PlayerController : MonoBehaviour
     {
         if (isInteract)
         {
-            CoreGameSignals.OnInteractObject?.Invoke();
+            
         }
-        
+        CoreGameSignals.OnInteractObject?.Invoke();
     }
     
     private void Awake()

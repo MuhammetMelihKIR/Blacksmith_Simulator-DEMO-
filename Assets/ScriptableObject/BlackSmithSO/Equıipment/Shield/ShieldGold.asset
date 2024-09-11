@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ShieldGold
   m_EditorClassIdentifier: 
   prefab: {fileID: 5028444349957911349, guid: 8fd7db329ca8e3149935db7701e4bde6, type: 3}
-  ObjectName: Gold Shield
-  ObjectSprite: {fileID: 21300000, guid: bd6ff4fd61f857448b47ed1b61d7f55c, type: 3}
+  purchasePrice: 0
+  salesPrice: 225
+  objectName: Gold Shield
+  objectSprite: {fileID: 21300000, guid: bd6ff4fd61f857448b47ed1b61d7f55c, type: 3}

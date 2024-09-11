@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class CoreUISignals : MonoBehaviour
@@ -25,5 +26,9 @@ public class CoreUISignals : MonoBehaviour
       public static UnityAction<bool> OnProductionTable_CanvasIsActive = delegate { };
       public static UnityAction<bool> OnProductionTable_EquipmentListPanelIsActive = delegate { };
       public static UnityAction<bool> OnProductionTable_ForgingSliderPanelIsActive = delegate { };
+      
+      // CustomerManager UI
+      
+      public static UnityAction<string,string> CustomerManager_CustomerInfoUpdate = delegate { };
 
   }

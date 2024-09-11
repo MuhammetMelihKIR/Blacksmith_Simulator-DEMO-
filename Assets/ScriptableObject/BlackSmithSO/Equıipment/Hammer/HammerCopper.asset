@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: HammerCopper
   m_EditorClassIdentifier: 
   prefab: {fileID: 8869664896903324378, guid: cea13c63c11b179498b3b7cc6d1dcde0, type: 3}
-  ObjectName: Copper Hamer
-  ObjectSprite: {fileID: 21300000, guid: 1c8f0fec7c806ab4086aeea5bb0420d6, type: 3}
+  purchasePrice: 0
+  salesPrice: 100
+  objectName: Copper Hammer
+  objectSprite: {fileID: 21300000, guid: 1c8f0fec7c806ab4086aeea5bb0420d6, type: 3}

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: SwordCopper
   m_EditorClassIdentifier: 
   prefab: {fileID: 3474414422608599564, guid: 6d9095a3fd66bb94f853b48c06bf1fee, type: 3}
-  ObjectName: Copper Sword
-  ObjectSprite: {fileID: 21300000, guid: 554181d32f6e7e54db9a9a0e0a0cd80a, type: 3}
+  purchasePrice: 0
+  salesPrice: 100
+  objectName: Copper Sword
+  objectSprite: {fileID: 21300000, guid: 554181d32f6e7e54db9a9a0e0a0cd80a, type: 3}

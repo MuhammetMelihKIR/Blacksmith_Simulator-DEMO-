@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ShieldSilver
   m_EditorClassIdentifier: 
   prefab: {fileID: 8439807683142150270, guid: 4b8c48c4a205e6b4a9acf18b313af843, type: 3}
-  ObjectName: Silver Shield
-  ObjectSprite: {fileID: 21300000, guid: 4acac440e3320034fab2bdbbec6ce82d, type: 3}
+  purchasePrice: 0
+  salesPrice: 150
+  objectName: Silver Shield
+  objectSprite: {fileID: 21300000, guid: 4acac440e3320034fab2bdbbec6ce82d, type: 3}

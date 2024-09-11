@@ -13,12 +13,13 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     [SerializeField] private List<GameObject> pickUpObjectList= new List<GameObject>();
     
     private GameObject sampleObject;
-    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     
     #endregion
     private void OnEnable()
     { 
         CoreGameSignals.OnTakeable_ObjectDetected += HandleTakeableObject;
+        CoreGameSignals.OnGetInteractable_ObjectDetected += OnCustomerPickUpObjectListRemove;
         CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove += OnPickUpObjectListRemove;
     }
 
@@ -31,11 +32,19 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     private void OnDisable()
     {
         CoreGameSignals.OnTakeable_ObjectDetected -= HandleTakeableObject;
+        CoreGameSignals.OnGetInteractable_ObjectDetected -= OnCustomerPickUpObjectListRemove;
         CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove -= OnPickUpObjectListRemove;
     }
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
         return blacksmithObjectSo;
+    }
+    
+    private void OnCustomerPickUpObjectListRemove(IGetInteractable getInteractable)
+    {
+        blacksmithObjectSo = null;
+        Destroy(sampleObject);
+        pickUpObjectList.RemoveAt(0);
     }
 
     private void HandleTakeableObject(ITakeable takeable)

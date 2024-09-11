@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: HelmetGold
   m_EditorClassIdentifier: 
   prefab: {fileID: 8888027086683095679, guid: b9c4e1d008788ae4eaf2f93c9cef0231, type: 3}
-  ObjectName: Gold Helmet
-  ObjectSprite: {fileID: 21300000, guid: 45c53e84bc0c6ac419c7adf06de80c60, type: 3}
+  purchasePrice: 0
+  salesPrice: 150
+  objectName: Gold Helmet
+  objectSprite: {fileID: 21300000, guid: 45c53e84bc0c6ac419c7adf06de80c60, type: 3}

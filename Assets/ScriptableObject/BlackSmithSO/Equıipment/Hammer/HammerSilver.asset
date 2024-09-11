@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: HammerSilver
   m_EditorClassIdentifier: 
   prefab: {fileID: 2654731403047560885, guid: 94f1ce61978f8e741bc700acef8a2cef, type: 3}
-  ObjectName: Silver Hammer
-  ObjectSprite: {fileID: 21300000, guid: f4642d26097f27e468f86756d2a1b817, type: 3}
+  purchasePrice: 0
+  salesPrice: 125
+  objectName: Silver Hammer
+  objectSprite: {fileID: 21300000, guid: f4642d26097f27e468f86756d2a1b817, type: 3}

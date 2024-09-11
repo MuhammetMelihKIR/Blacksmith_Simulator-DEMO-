@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ShiledIron
   m_EditorClassIdentifier: 
   prefab: {fileID: 6889552219748593760, guid: 7fd26502ebd162449b654097d2159fa2, type: 3}
-  ObjectName: Iron Shield
-  ObjectSprite: {fileID: 21300000, guid: e7d89db887266264593fa8d2fb7fab2b, type: 3}
+  purchasePrice: 0
+  salesPrice: 75
+  objectName: Iron Shield
+  objectSprite: {fileID: 21300000, guid: e7d89db887266264593fa8d2fb7fab2b, type: 3}
