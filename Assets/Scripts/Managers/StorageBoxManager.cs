@@ -95,5 +95,13 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
         }
     }
     
+    public void ReceiveOrder(int price)
+    {
+        for (int i = 0; i < price; i++)
+        {
+            IncreaseObject();
+        }
+    }
+    
     
 }

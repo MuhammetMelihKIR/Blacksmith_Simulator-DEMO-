@@ -994,7 +994,7 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -1004,17 +1004,17 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -52.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 96.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -1054,12 +1054,12 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 65.65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -319.21002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -3769,7 +3769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &395335190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5764,7 +5764,7 @@ GameObject:
   - component: {fileID: 554566080}
   - component: {fileID: 554566079}
   m_Layer: 0
-  m_Name: Buy_button
+  m_Name: Order_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6871,6 +6871,7 @@ GameObject:
   - component: {fileID: 639331547}
   - component: {fileID: 639331550}
   - component: {fileID: 639331549}
+  - component: {fileID: 639331551}
   m_Layer: 0
   m_Name: DealerManager
   m_TagString: Untagged
@@ -6890,6 +6891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754f372b299f83149a72a4534ecfe17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dealerState: 0
   SplineAnimate: {fileID: 958338641}
   WheeList:
   - {fileID: 6782908771711835812}
@@ -6901,6 +6903,7 @@ MonoBehaviour:
   totalPriceText: {fileID: 512441328}
   canvas: {fileID: 395335192}
   closeCanvasButton: {fileID: 1233866735}
+  orderConfirmButton: {fileID: 554566079}
 --- !u!4 &639331548
 Transform:
   m_ObjectHideFlags: 0
@@ -6956,6 +6959,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 1.8033844}
   m_Center: {x: 0.0005096194, y: 1.69, z: 0.535849}
+--- !u!65 &639331551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639331546}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.36, y: 3, z: 2.14}
+  m_Center: {x: 0, y: 1.69, z: -0.02}
 --- !u!1 &647084693
 GameObject:
   m_ObjectHideFlags: 0
@@ -10184,7 +10208,6 @@ GameObject:
   m_Component:
   - component: {fileID: 958338640}
   - component: {fileID: 958338641}
-  - component: {fileID: 958338642}
   m_Layer: 0
   m_Name: Dealer_Wagon
   m_TagString: Untagged
@@ -10225,34 +10248,13 @@ MonoBehaviour:
   m_PlayOnAwake: 0
   m_LoopMode: 0
   m_Method: 0
-  m_Duration: 100
-  m_MaxSpeed: 1.9960333
+  m_Duration: 3
+  m_MaxSpeed: 66.53445
   m_EasingMode: 0
   m_AlignmentMode: 1
   m_ObjectForwardAxis: 2
   m_ObjectUpAxis: 1
   m_StartOffset: 0
---- !u!65 &958338642
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958338639}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 3, z: 4}
-  m_Center: {x: 0, y: 1.69, z: -0.38}
 --- !u!1001 &959482145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13981,7 +13983,7 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -13991,17 +13993,17 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -52.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 96.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -14041,12 +14043,12 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 412.94998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -319.21002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -22186,7 +22188,7 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -22196,17 +22198,17 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -52.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 96.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -22246,12 +22248,12 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 412.94998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -48.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -53093,7 +53095,7 @@ WheelCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_ProvidesContacts: 0
 --- !u!65 &2320351102429787038
 BoxCollider:
@@ -53152,7 +53154,7 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -53162,17 +53164,17 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -52.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 96.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -53212,12 +53214,12 @@ PrefabInstance:
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 65.65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -48.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678144900676859029, guid: 864d85a72900244439b300bb8767f3bf,
         type: 3}
@@ -54137,7 +54139,7 @@ WheelCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_ProvidesContacts: 0
 --- !u!198 &4215929347299086267
 ParticleSystem:
@@ -69128,7 +69130,7 @@ WheelCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_ProvidesContacts: 0
 --- !u!33 &5796732443214344782
 MeshFilter:
@@ -69754,7 +69756,7 @@ WheelCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_ProvidesContacts: 0
 --- !u!1 &7273420465814935156
 GameObject:

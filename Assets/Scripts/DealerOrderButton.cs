@@ -16,7 +16,24 @@ public class DealerOrderButton : MonoBehaviour
     [SerializeField] private Button decreasePieceButton;
     private int piece = 0;
     private int purchasePrice;
+
+
+    private void OnEnable()
+    {
+        CoreGameSignals.DealerManager_OnReceiveOrder += OnReceiveOrder;
+        CoreGameSignals.DealerOrderButton_OnPieceReset += OnPieceReset;
+    }
     
+    private void OnReceiveOrder()
+    {
+        storageBoxManager.ReceiveOrder(piece);
+    }
+
+    private void OnDisable()
+    {
+        CoreGameSignals.DealerManager_OnReceiveOrder -= OnReceiveOrder;
+        CoreGameSignals.DealerOrderButton_OnPieceReset -= OnPieceReset;
+    }
 
     private void Awake()
     {
@@ -31,7 +48,8 @@ public class DealerOrderButton : MonoBehaviour
         increasePieceButton.onClick.AddListener(PieceIncrease);
         decreasePieceButton.onClick.AddListener(PieceDecrease);
     }
-    public void PieceIncrease()
+
+    private void PieceIncrease()
     {
         if (piece < storageBoxManager.GetNumberOfBarsUsed())
         {
@@ -40,7 +58,7 @@ public class DealerOrderButton : MonoBehaviour
             CoreGameSignals.DealerManager_OnTotalPriceUpdate?.Invoke(purchasePrice);
         }
     }
-    public void PieceDecrease()
+    private void PieceDecrease()
     {
         if (piece > 0)
         {
@@ -49,4 +67,16 @@ public class DealerOrderButton : MonoBehaviour
             CoreGameSignals.DealerManager_OnTotalPriceUpdate?.Invoke(-purchasePrice);
         }
     }
+    
+    private void OnPieceReset()
+    {
+        piece = 0;
+        pieceText.text = piece.ToString();
+        CoreGameSignals.DealerManager_OnTotalPriceUpdate?.Invoke(0);
+    }
+    
+    
+    
+    
+    
 }

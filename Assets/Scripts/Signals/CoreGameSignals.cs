@@ -35,6 +35,10 @@ public class CoreGameSignals : MonoBehaviour
     public static UnityAction<CursorLockMode> OnCursorLockState = delegate { }; // CURSOR LOCK
     public static UnityAction<bool> OnPlayerCanMove = delegate { }; // PLAYER CAN MOVE
     
+    public static UnityAction<bool> Player_OnPlayerCameraRotate = delegate { }; // PLAYER CAN ROTATE
+
+    // PLAYER PICK UP AND DROP OBJECT
+    
     public static UnityAction PlayerPickUpAndDropObject_OnPickUpListRemove = delegate { }; // PLAYER PICK UP AND DROP OBJECT
     
     // INTERFACE
@@ -57,6 +61,11 @@ public class CoreGameSignals : MonoBehaviour
     // DealerManager 
     
     public static UnityAction<int> DealerManager_OnTotalPriceUpdate = delegate { };
+    public static UnityAction DealerManager_OnReceiveOrder = delegate { };
+    
+    // DealerOrderButton
+    
+    public static UnityAction DealerOrderButton_OnPieceReset = delegate { };
     
     
     
