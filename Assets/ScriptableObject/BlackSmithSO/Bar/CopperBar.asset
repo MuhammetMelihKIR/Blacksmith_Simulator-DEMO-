@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: 8993361070447581835, guid: c863b3202e0256c4b80e41c85177f972, type: 3}
   purchasePrice: 10
   salesPrice: 0
-  ObjectName: 
-  ObjectSprite: {fileID: 0}
+  objectName: Copper Bar
+  objectSprite: {fileID: 21300000, guid: afa5a8845520aec44b41a435a043f9b7, type: 3}

@@ -9,7 +9,8 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
 {
     
     [SerializeField] private List<GameObject> bars = new List<GameObject>();
-    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    private int numberOfBarsUsed;
     private int maxBars = 12;
     private int currentIndex;
     private Outline outline;
@@ -62,8 +63,22 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
     }
 
     #endregion
-    
 
+
+    public BlacksmithObjectSO GetBlacksmithObjectSO()
+    {
+        return blacksmithObjectSo;
+    }
+    public int GetNumberOfBarsUsed()
+    {
+        numberOfBarsUsed= maxBars-currentIndex-1;
+        return numberOfBarsUsed;
+    }
+
+    public int GetBarCount()
+    {
+        return bars.Count;
+    }
     private void Awake()
     {
         outline = GetComponent<Outline>();
@@ -94,5 +109,6 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
             bar.SetActive(true);
         }
     }
+    
     
 }

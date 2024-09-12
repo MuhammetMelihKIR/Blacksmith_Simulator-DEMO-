@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -44,8 +45,6 @@ public class CoreGameSignals : MonoBehaviour
     
     public static UnityAction<ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
     
-    public static UnityAction<IGetInteractable> OnGetInteractable_ObjectDetected = delegate { }; // GET INTERACTABLE INTERFACE CONTROL
-    
     // PRODUCTION TABLE
     
     public static UnityAction<BlacksmithObjectSO,Material> OnProductionTable_InstantiateObjectForForging = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
@@ -56,6 +55,8 @@ public class CoreGameSignals : MonoBehaviour
     public static UnityAction<bool> OnOvenManager_IsMelted = delegate { }; // OVEN MANAGER
     
     // CustomerManager
+    
+    public static UnityAction OnCustomerManager_ProcessCustomerInQueue = delegate { }; // CUSTOMER MANAGER
     
     
     

@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: 8998791999030694696, guid: 6274f04087890074685e04bb849c7779, type: 3}
   purchasePrice: 20
   salesPrice: 0
-  ObjectName: 
-  ObjectSprite: {fileID: 0}
+  objectName: Iron Bar
+  objectSprite: {fileID: 21300000, guid: c904bf4d376f2cc4d9787c22bf8162e6, type: 3}

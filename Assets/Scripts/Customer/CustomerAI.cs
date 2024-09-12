@@ -6,9 +6,8 @@ using Random = UnityEngine.Random;
 
 public class CustomerAI : MonoBehaviour,IGetInteractable
 {
-    [SerializeField] private PlayerPickUpAndDropObject playerPickUpAndDropObject;
-    
     [Header("Customer Info")]
+    public PlayerPickUpAndDropObject player;
     private CustomerSO customerSO;
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private string customerName;
@@ -16,17 +15,18 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
     
     
     private NavMeshAgent agent;
+   
     
     public void GetInteract()
     {
-        if (playerPickUpAndDropObject.GetBlackSmithObjectSO() == blacksmithObjectSO )
+        if (blacksmithObjectSO == player.GetBlackSmithObjectSO())  
         {
-            blacksmithObjectSO = null;
             CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove?.Invoke();
-            print("oldu");
+            CoreGameSignals.OnCustomerManager_ProcessCustomerInQueue?.Invoke();
+            blacksmithObjectSO = null;
         }
     }
-    
+
     public BlacksmithObjectSO GetBlacksmithObjectSO()
     {
         return blacksmithObjectSO;
@@ -41,6 +41,7 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
     {
         agent = GetComponent<NavMeshAgent>();
     }
+
     public void CustomerSOSetup()
     {
         customerPrefab = customerSO.customerPrefab;

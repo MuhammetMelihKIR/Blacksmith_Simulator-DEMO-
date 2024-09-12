@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13aa1bc1026bbfd4cb2771a6eee9b7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   customerPrefab: {fileID: 0}
   customerName: 
   blacksmithObjectSO: {fileID: 0}

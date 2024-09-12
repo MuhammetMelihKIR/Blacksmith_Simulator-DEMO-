@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: 2717869003492387550, guid: d56a14bac2c798f4c9f750753297c62a, type: 3}
   purchasePrice: 30
   salesPrice: 0
-  ObjectName: 
-  ObjectSprite: {fileID: 0}
+  objectName: Silver Bar
+  objectSprite: {fileID: 21300000, guid: 7429ced0a201f764987bdd7df5d874b8, type: 3}

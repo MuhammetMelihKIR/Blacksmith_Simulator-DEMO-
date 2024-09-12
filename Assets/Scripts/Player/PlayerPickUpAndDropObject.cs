@@ -19,10 +19,11 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     private void OnEnable()
     { 
         CoreGameSignals.OnTakeable_ObjectDetected += HandleTakeableObject;
-        CoreGameSignals.OnGetInteractable_ObjectDetected += OnCustomerPickUpObjectListRemove;
+        
         CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove += OnPickUpObjectListRemove;
     }
 
+    
     private void OnPickUpObjectListRemove()
     {
         blacksmithObjectSo = null;
@@ -32,21 +33,13 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     private void OnDisable()
     {
         CoreGameSignals.OnTakeable_ObjectDetected -= HandleTakeableObject;
-        CoreGameSignals.OnGetInteractable_ObjectDetected -= OnCustomerPickUpObjectListRemove;
+        
         CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove -= OnPickUpObjectListRemove;
     }
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
         return blacksmithObjectSo;
     }
-    
-    private void OnCustomerPickUpObjectListRemove(IGetInteractable getInteractable)
-    {
-        blacksmithObjectSo = null;
-        Destroy(sampleObject);
-        pickUpObjectList.RemoveAt(0);
-    }
-
     private void HandleTakeableObject(ITakeable takeable)
     {
         if (pickUpObjectList.Count <= 0)
@@ -60,20 +53,21 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     }
     private void PickUpNewObject(ITakeable takeable)
     {
-        if (blacksmithObjectSo == null)
-        {
-            blacksmithObjectSo = takeable.GetBlackSmithObjectSO();
-            if (takeable.GetPrefab()!=null)
-            {
-                sampleObject = Instantiate(takeable.GetPrefab());
-                sampleObject.transform.position = pickUpPoint.position;
-                sampleObject.transform.rotation = pickUpPoint.rotation;
-                sampleObject.transform.parent = pickUpPoint;
-                pickUpObjectList.Add(sampleObject);
-            
-                takeable.GetObject();
-            }
-        }
+       if (blacksmithObjectSo == null)
+       {
+           blacksmithObjectSo = takeable.GetBlackSmithObjectSO();
+           
+           if (takeable.GetPrefab()!=null)
+           {
+               sampleObject = Instantiate(takeable.GetPrefab());
+               sampleObject.transform.position = pickUpPoint.position;
+               sampleObject.transform.rotation = pickUpPoint.rotation;
+               sampleObject.transform.parent = pickUpPoint;
+               pickUpObjectList.Add(sampleObject);
+           
+               takeable.GetObject();
+           }
+       }
     }
 
     private void TryDropObject(ITakeable takeable)
@@ -81,7 +75,6 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
         if (blacksmithObjectSo == takeable.GetBlackSmithObjectSO())
         {
             takeable.GiveObject();
-            
             Destroy(pickUpObjectList[0]);
             pickUpObjectList.RemoveAt(0);
             blacksmithObjectSo = null;

@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class BlacksmithObject : MonoBehaviour
 {   
-    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
 
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {

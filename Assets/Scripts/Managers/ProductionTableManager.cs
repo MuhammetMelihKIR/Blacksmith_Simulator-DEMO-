@@ -62,8 +62,9 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
+         
         BlacksmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
-        
+      
         foreach (Button button in buttonList)
         {
             if (button.GetComponent<EquipmentSelectButton>().GetMeltedToEquipmentSO().inputObject == playerObjectSO)
@@ -73,8 +74,11 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
                 return playerObjectSO;
             }
         }
+        
+        
         isBlackSmithObject = false;
-        return null;
+
+        return blacksmithObjectSo;
     }
 
     public void OutlineActive()

@@ -28,6 +28,13 @@ public class CustomersManager : MonoBehaviour
      private void OnEnable()
      {
          CoreUISignals.CustomerManager_CustomerInfoUpdate += UpdateCustomerInfo;
+         CoreGameSignals.OnCustomerManager_ProcessCustomerInQueue += ProcessCustomerInQueue;
+     }
+
+     private void OnDisable()
+     {
+         CoreUISignals.CustomerManager_CustomerInfoUpdate -= UpdateCustomerInfo;
+         CoreGameSignals.OnCustomerManager_ProcessCustomerInQueue -= ProcessCustomerInQueue;
      }
 
      private void Awake()
@@ -41,11 +48,6 @@ public class CustomersManager : MonoBehaviour
      private void Update()
      {
          CanvasEnable();
-         
-         if (Input.GetMouseButtonDown(1))
-         {
-             ProcessCustomerInQueue();
-         }
      }
      
      private void SpawnNewCustomerAtQueuePosition(int index)
