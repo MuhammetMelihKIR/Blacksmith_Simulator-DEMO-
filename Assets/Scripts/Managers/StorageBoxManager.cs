@@ -42,28 +42,13 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
         outline.enabled = true;
     }
 
-    #endregion
-
-
-    #region ON ENABLE AND DISABLE
-
-    private void OnEnable()
-    {
-        CoreGameSignals.OnOutline_Deactive += OnOutlineDeactive;
-    }
-    
-    private void OnOutlineDeactive()
+    public void OutlineDeactive()
     {
         outline.enabled = false;
     }
 
-    private void OnDisable()
-    {
-        CoreGameSignals.OnOutline_Deactive -= OnOutlineDeactive;
-    }
-
     #endregion
-
+  
 
     public BlacksmithObjectSO GetBlacksmithObjectSO()
     {

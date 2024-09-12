@@ -22,7 +22,7 @@ public class ForgingBar : MonoBehaviour
         {
             if (IsInGreenZone())
             {
-                CoreGameSignals.OnProductionTable_HammerHit?.Invoke();
+                CoreGameSignals.ProductionTable_OnHammerHit?.Invoke();
                 Debug.Log("Correct Timing! Moving the green zone...");
                 MoveGreenZone();
             }

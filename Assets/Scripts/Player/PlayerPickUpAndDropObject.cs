@@ -18,9 +18,9 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     #endregion
     private void OnEnable()
     { 
-        CoreGameSignals.OnTakeable_ObjectDetected += HandleTakeableObject;
+        CoreGameSignals.Takeable_OnObjectDetected += HandleTakeableObject;
         
-        CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove += OnPickUpObjectListRemove;
+        CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove += OnPickUpObjectListRemove;
     }
 
     
@@ -32,9 +32,9 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     }
     private void OnDisable()
     {
-        CoreGameSignals.OnTakeable_ObjectDetected -= HandleTakeableObject;
+        CoreGameSignals.Takeable_OnObjectDetected -= HandleTakeableObject;
         
-        CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove -= OnPickUpObjectListRemove;
+        CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove -= OnPickUpObjectListRemove;
     }
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {

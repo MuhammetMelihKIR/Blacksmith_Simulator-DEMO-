@@ -50,7 +50,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(true);
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
         
-        OnOutlineDeactive();
+        OutlineDeactive();
         ButtonsCheck();
         
     }
@@ -85,6 +85,11 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     {
         outline.enabled = true;
     }
+    
+    public void OutlineDeactive()
+    {
+        outline.enabled = false;
+    }
 
     #endregion
 
@@ -92,9 +97,8 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
 
     private void OnEnable()
     {
-        CoreGameSignals.OnOutline_Deactive += OnOutlineDeactive;
         CoreGameSignals.OnProductionTable_InstantiateObjectForForging += InstantiateObjectForForging;
-        CoreGameSignals.OnProductionTable_HammerHit += OnHammerHit;
+        CoreGameSignals.ProductionTable_OnHammerHit += OnHammerHit;
         
         //UI
         CoreUISignals.OnProductionTable_CanvasIsActive += OnCanvasIsActive;
@@ -102,10 +106,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive += OnForgingSliderPanelIsActive;
     }
     
-    private void OnOutlineDeactive()
-    {
-        outline.enabled = false;
-    }
+    
     
     private void InstantiateObjectForForging(BlacksmithObjectSO SO,Material material)
     {
@@ -166,9 +167,9 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
 
     private void OnDisable()
     {
-        CoreGameSignals.OnOutline_Deactive -= OnOutlineDeactive;
+        
         CoreGameSignals.OnProductionTable_InstantiateObjectForForging -= InstantiateObjectForForging;
-        CoreGameSignals.OnProductionTable_HammerHit -= OnHammerHit;
+        CoreGameSignals.ProductionTable_OnHammerHit -= OnHammerHit;
         
         //UI
         CoreUISignals.OnProductionTable_CanvasIsActive -= OnCanvasIsActive;
@@ -196,7 +197,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreUISignals.OnProductionTable_EquipmentListPanelIsActive?.Invoke(false);
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(true);
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
-        CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove?.Invoke();
+        CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove?.Invoke();
     }
 
     private void ProductionTableExit() // EXIT BUTTON CLICK

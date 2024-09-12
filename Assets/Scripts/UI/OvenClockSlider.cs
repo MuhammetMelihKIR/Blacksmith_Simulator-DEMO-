@@ -14,12 +14,12 @@ public class OvenClockSlider : MonoBehaviour
 
     private void OnEnable()
     {
-        CoreGameSignals.OnOvenManager_IsMelted += StartProgressBar;
+        CoreGameSignals.OvenManager_OnIsMelted += StartProgressBar;
     }
 
     private void OnDisable()
     {
-        CoreGameSignals.OnOvenManager_IsMelted -= StartProgressBar;
+        CoreGameSignals.OvenManager_OnIsMelted -= StartProgressBar;
     }
 
     private void Start()

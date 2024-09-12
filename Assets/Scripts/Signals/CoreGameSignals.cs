@@ -35,28 +35,28 @@ public class CoreGameSignals : MonoBehaviour
     public static UnityAction<CursorLockMode> OnCursorLockState = delegate { }; // CURSOR LOCK
     public static UnityAction<bool> OnPlayerCanMove = delegate { }; // PLAYER CAN MOVE
     
-    public static UnityAction OnPlayerPickUpAndDropObject_PickUpListRemove = delegate { }; // PLAYER PICK UP AND DROP OBJECT
-    
-    // OUTLINE
-    
-    public static UnityAction OnOutline_Deactive = delegate { }; // OUTLINE DEACTIVE
+    public static UnityAction PlayerPickUpAndDropObject_OnPickUpListRemove = delegate { }; // PLAYER PICK UP AND DROP OBJECT
     
     // INTERFACE
     
-    public static UnityAction<ITakeable> OnTakeable_ObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
+    public static UnityAction<ITakeable> Takeable_OnObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 
     
     // PRODUCTION TABLE
     
     public static UnityAction<BlacksmithObjectSO,Material> OnProductionTable_InstantiateObjectForForging = delegate { }; // INSTANTIATE NON MATERIAL OBJECT---PRODUCTION TABLE
-    public static UnityAction OnProductionTable_HammerHit = delegate { }; // PRODUCTION TABLE HAMMER HIT
+    public static UnityAction ProductionTable_OnHammerHit = delegate { }; // PRODUCTION TABLE HAMMER HIT
     
     // OvenManger
     
-    public static UnityAction<bool> OnOvenManager_IsMelted = delegate { }; // OVEN MANAGER
+    public static UnityAction<bool> OvenManager_OnIsMelted = delegate { }; // OVEN MANAGER
     
     // CustomerManager
     
-    public static UnityAction OnCustomerManager_ProcessCustomerInQueue = delegate { }; // CUSTOMER MANAGER
+    public static UnityAction CustomerManager_OnProcessCustomerInQueue = delegate { }; // CUSTOMER MANAGER
+    
+    // DealerManager 
+    
+    public static UnityAction<int> DealerManager_OnTotalPriceUpdate = delegate { };
     
     
     

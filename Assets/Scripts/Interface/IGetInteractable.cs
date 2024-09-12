@@ -1,5 +1,5 @@
 ﻿
-  public interface IGetInteractable
+  public interface IGetInteractable : IOutlineable
   {
       void GetInteract();
   }

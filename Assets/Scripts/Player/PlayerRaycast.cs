@@ -20,7 +20,7 @@ public class PlayerRaycast : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 0.5f);
             if (hit.collider.gameObject.TryGetComponent<ITakeable>(out ITakeable takeable))
             {
-                CoreGameSignals.OnTakeable_ObjectDetected?.Invoke( takeable);
+                CoreGameSignals.Takeable_OnObjectDetected?.Invoke( takeable);
             }
             else if (hit.collider.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
             {

@@ -21,10 +21,20 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
     {
         if (blacksmithObjectSO == player.GetBlackSmithObjectSO())  
         {
-            CoreGameSignals.OnPlayerPickUpAndDropObject_PickUpListRemove?.Invoke();
-            CoreGameSignals.OnCustomerManager_ProcessCustomerInQueue?.Invoke();
+            CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove?.Invoke();
+            CoreGameSignals.CustomerManager_OnProcessCustomerInQueue?.Invoke();
             blacksmithObjectSO = null;
         }
+    }
+
+    public void OutlineActive()
+    {
+        
+    }
+
+    public void OutlineDeactive()
+    {
+        
     }
 
     public BlacksmithObjectSO GetBlacksmithObjectSO()

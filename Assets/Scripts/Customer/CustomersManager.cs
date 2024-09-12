@@ -28,13 +28,13 @@ public class CustomersManager : MonoBehaviour
      private void OnEnable()
      {
          CoreUISignals.CustomerManager_CustomerInfoUpdate += UpdateCustomerInfo;
-         CoreGameSignals.OnCustomerManager_ProcessCustomerInQueue += ProcessCustomerInQueue;
+         CoreGameSignals.CustomerManager_OnProcessCustomerInQueue += ProcessCustomerInQueue;
      }
 
      private void OnDisable()
      {
          CoreUISignals.CustomerManager_CustomerInfoUpdate -= UpdateCustomerInfo;
-         CoreGameSignals.OnCustomerManager_ProcessCustomerInQueue -= ProcessCustomerInQueue;
+         CoreGameSignals.CustomerManager_OnProcessCustomerInQueue -= ProcessCustomerInQueue;
      }
 
      private void Awake()

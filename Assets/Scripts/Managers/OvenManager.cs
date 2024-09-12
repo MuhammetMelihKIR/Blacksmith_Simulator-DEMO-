@@ -18,7 +18,7 @@ public class OvenManager : MonoBehaviour, ITakeable
     public void GetObject()
     {
         if (currentState != OvenManagerState.melted) return;
-        CoreGameSignals.OnOvenManager_IsMelted?.Invoke(true);
+        CoreGameSignals.OvenManager_OnIsMelted?.Invoke(true);
         blacksmithObjectSo = null;
         OvenClockSliderSetActive(false);
         currentState = OvenManagerState.start;
@@ -42,6 +42,11 @@ public class OvenManager : MonoBehaviour, ITakeable
     {
        outline.enabled = true;
     }
+
+    public void OutlineDeactive()
+    {
+        outline.enabled = false;
+    }
     
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
@@ -61,23 +66,6 @@ public class OvenManager : MonoBehaviour, ITakeable
 
     #endregion
 
-    
-    #region ON ENABLE AND DISABLE
-
-    private void OnEnable()
-    {
-        CoreGameSignals.OnOutline_Deactive += OnOutlineDeactive;
-    }
-    private void OnOutlineDeactive()
-    {
-        outline.enabled = false;
-    }
-    private void OnDisable()
-    {
-        CoreGameSignals.OnOutline_Deactive -= OnOutlineDeactive;
-    }
-    #endregion
-
     private void MeltToMaterial()
     {
         foreach (MaterialToMeltedSO obj in materialToMeltedSO)
@@ -87,7 +75,7 @@ public class OvenManager : MonoBehaviour, ITakeable
                 blacksmithObjectSo = obj.outputMaterial;
                 currentState = OvenManagerState.melting;
                 OvenClockSliderSetActive(true);
-                CoreGameSignals.OnOvenManager_IsMelted?.Invoke(false);
+                CoreGameSignals.OvenManager_OnIsMelted?.Invoke(false);
             }
         }
     }
