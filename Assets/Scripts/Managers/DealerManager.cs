@@ -4,11 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.UI;
-/// <summary>
-///  GELEN SİPARİŞİ ALINMIYOR
-/// </summary>
 
-public class  DealerManager : MonoBehaviour, IGetInteractable
+public class DealerManager : MonoBehaviour, IGetInteractable
 {
     [SerializeField] private DealerState dealerState;
     
@@ -23,12 +20,22 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI totalPriceText;
     [SerializeField] private Canvas canvas;
-    [SerializeField] Button closeCanvasButton;
-    [SerializeField] Button orderConfirmButton;
-    
+    [SerializeField] private Button closeCanvasButton;
+    [SerializeField] private Button orderConfirmButton;
+
     private int totalPrice;
     private Outline outline;
     
+    private DealerState GetDealerState()
+    {
+        return dealerState;
+    }
+    private void SetDealerState(DealerState state)
+    {
+        dealerState = state;
+    }
+
+    #region IGetInteractable INTERFACE
     public void GetInteract()
     {
         if (GetDealerState()==DealerState.takeOrder)
@@ -40,6 +47,7 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
             CoreGameSignals.DealerManager_OnReceiveOrder?.Invoke();
             
             SetDealerState(DealerState.takeOrder);
+            CoreGameSignals.DealerOrderButton_OnPieceReset?.Invoke();
         }
     }
 
@@ -52,6 +60,11 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
     { 
         outline.enabled = false;
     }
+
+    #endregion
+
+    #region  ONENABLE / ONDISABLE
+
     private void OnEnable()
     {
         CoreGameSignals.DealerManager_OnTotalPriceUpdate += TotalPriceUpdate;
@@ -62,6 +75,9 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
         CoreGameSignals.DealerManager_OnTotalPriceUpdate -= TotalPriceUpdate;
     }
 
+    #endregion
+    
+
     private void Awake()
     {
         outline = GetComponent<Outline>();
@@ -71,7 +87,7 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
         
         TotalPriceUpdate(0);
         
-        closeCanvasButton.onClick.AddListener(CanvasDeactive);
+        closeCanvasButton.onClick.AddListener(CloseButton);
         orderConfirmButton.onClick.AddListener(OrderConfirm);
     }
 
@@ -83,8 +99,29 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
         }
         WagonMove(SplineAnimate.IsPlaying);
     }
+    
+    private int GetTotalPrice()
+    {
+        return totalPrice;
+    }
+    private void TotalPriceUpdate(int addPrice)
+    {
+        totalPrice = totalPrice + addPrice;
+        totalPriceText.text = " Total Price : "+totalPrice.ToString();
+    }
+    
+    private void OrderConfirm()
+    {
+        if (GetTotalPrice() > 0)
+        {
+            CoreGameSignals.GoldManager_OnGoldUpdate?.Invoke(-GetTotalPrice());
+            SetDealerState(DealerState.walk);
+            SplineAnimate.Restart( true );
+            CanvasDeactive();
+        }
+    }
 
-    #region WAGON MOVEMENTw
+    #region WAGON MOVEMENT
     private void WagonMove(bool isMoving)
     {
         HorseAnimation(isMoving);
@@ -104,15 +141,13 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
     }
 
     #endregion
-    
-    public int GetTotalPrice()
+
+    #region UI 
+
+    private void CloseButton()
     {
-        return totalPrice;
-    }
-    private void TotalPriceUpdate(int addPrice)
-    {
-        totalPrice = totalPrice + addPrice;
-        totalPriceText.text = " Total Price : "+totalPrice.ToString();
+        CanvasDeactive();
+        CoreGameSignals.DealerOrderButton_OnPieceReset?.Invoke();
     }
     private void CanvasDeactive()
     {
@@ -122,7 +157,6 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
         CoreGameSignals.OnPlayerCanMove?.Invoke(true);
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
         CoreGameSignals.Player_OnPlayerCameraRotate?.Invoke(true);
-        CoreGameSignals.DealerOrderButton_OnPieceReset?.Invoke();
     }
     private void CanvasActive()
     {
@@ -131,28 +165,9 @@ public class  DealerManager : MonoBehaviour, IGetInteractable
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.None);
         CoreGameSignals.Player_OnPlayerCameraRotate?.Invoke(false);
     }
-    private DealerState GetDealerState()
-    {
-        return dealerState;
-    }
-    private void SetDealerState(DealerState state)
-    {
-        dealerState = state;
-    }
     
-    private void OrderConfirm()
-    {
-        if (GetTotalPrice() <= 0)
-        {
-            CanvasDeactive();
-        }
-        else
-        {
-            CanvasDeactive();
-            
-            SetDealerState(DealerState.walk);
-            SplineAnimate.Play();
-        }
-    }
+
+    #endregion
+    
     
 }

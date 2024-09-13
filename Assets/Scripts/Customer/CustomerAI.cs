@@ -13,16 +13,14 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
     [SerializeField] private string customerName;
     [SerializeField] private BlacksmithObjectSO blacksmithObjectSO;
     
-    
     private NavMeshAgent agent;
-   
-    
     public void GetInteract()
     {
         if (blacksmithObjectSO == player.GetBlackSmithObjectSO())  
         {
             CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove?.Invoke();
             CoreGameSignals.CustomerManager_OnProcessCustomerInQueue?.Invoke();
+            CoreGameSignals.GoldManager_OnGoldUpdate?.Invoke(blacksmithObjectSO.salesPrice); 
             blacksmithObjectSO = null;
         }
     }
@@ -71,7 +69,6 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
         agent.SetDestination(endPoint.position);
         
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("SaleTable"))

@@ -67,6 +67,10 @@ public class CoreGameSignals : MonoBehaviour
     
     public static UnityAction DealerOrderButton_OnPieceReset = delegate { };
     
+    // GoldManager
+    
+    public static UnityAction<int> GoldManager_OnGoldUpdate = delegate { };
+    
     
     
     

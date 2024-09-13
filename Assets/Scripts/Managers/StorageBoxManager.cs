@@ -95,11 +95,13 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
         }
     }
     
-    public void ReceiveOrder(int price)
+    public void ReceiveOrder(int piece)
     {
-        for (int i = 0; i < price; i++)
+        print(piece+" receive order + storage box");
+        for (int i = 0; i < piece; i++)
         {
             IncreaseObject();
+            print("receive order + storage box");
         }
     }
     

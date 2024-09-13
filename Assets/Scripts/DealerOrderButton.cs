@@ -14,7 +14,7 @@ public class DealerOrderButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI purchaseText;
     [SerializeField] private Button increasePieceButton;
     [SerializeField] private Button decreasePieceButton;
-    private int piece = 0;
+    private int piece;
     private int purchasePrice;
 
 
@@ -26,6 +26,7 @@ public class DealerOrderButton : MonoBehaviour
     
     private void OnReceiveOrder()
     {
+        print(piece);
         storageBoxManager.ReceiveOrder(piece);
     }
 
