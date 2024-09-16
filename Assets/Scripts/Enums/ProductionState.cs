@@ -2,5 +2,5 @@
 
   public enum ProductionState
   {
-      select,forge,complete
+      idle,select,forge,complete
   }

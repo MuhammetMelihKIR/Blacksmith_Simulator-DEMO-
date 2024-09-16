@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Customer_1
   m_EditorClassIdentifier: 
   customerName: Jack
-  customerPrefab: {fileID: 3709205343086509284, guid: a3dba72d9a09ed944bff907f7caa933b,
+  customerPrefab: {fileID: 7436420079333237359, guid: a3dba72d9a09ed944bff907f7caa933b,
     type: 3}
   equipmentList: {fileID: 11400000, guid: 8804e6557b63ad2448918ba547962526, type: 2}

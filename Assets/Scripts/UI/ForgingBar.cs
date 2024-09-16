@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class ForgingBar : MonoBehaviour
 { 
@@ -14,22 +16,33 @@ public class ForgingBar : MonoBehaviour
     public float movingSpeed; 
     private bool isMovingRight = true;
 
+
+    private void OnEnable()
+    {
+        CoreGameSignals.PlayerController_Forge += OnHammerHit;
+    }
+
+    private void OnDisable()
+    {
+        CoreGameSignals.PlayerController_Forge -= OnHammerHit;
+    }
+
     private void Update()
     {
         MoveLine();
-        
-        if (Input.GetKeyDown(KeyCode.Space))
+    }
+    
+    private void OnHammerHit()
+    {
+        if (IsInGreenZone())
         {
-            if (IsInGreenZone())
-            {
-                CoreGameSignals.ProductionTable_OnHammerHit?.Invoke();
-                Debug.Log("Correct Timing! Moving the green zone...");
-                MoveGreenZone();
-            }
-            else
-            {
-                Debug.Log("Missed! Try again.");
-            }
+            CoreGameSignals.ProductionTable_OnHammerHit?.Invoke();
+            Debug.Log("Correct Timing! Moving the green zone...");
+            MoveGreenZone();
+        }
+        else
+        {
+            Debug.Log("Missed! Try again.");
         }
     }
 

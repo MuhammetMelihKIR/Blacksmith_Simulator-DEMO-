@@ -22,13 +22,10 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
         
         CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove += OnPickUpObjectListRemove;
     }
-
-    
     private void OnPickUpObjectListRemove()
     {
         blacksmithObjectSo = null;
         Destroy(sampleObject);
-        pickUpObjectList.RemoveAt(0);
     }
     private void OnDisable()
     {

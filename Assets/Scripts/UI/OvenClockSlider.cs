@@ -29,15 +29,14 @@ public class OvenClockSlider : MonoBehaviour
 
     private void Update()
     {
-        if (!isFilling)
-        {
-            elapsedTime += Time.deltaTime;
-            progressBar.value = Mathf.Clamp01(elapsedTime / fillDuration);
+        if (isFilling) return;
+        
+        elapsedTime += Time.deltaTime;
+        progressBar.value = Mathf.Clamp01(elapsedTime / fillDuration);
             
-            if (progressBar.value >= 1f)
-            {
-                OnProgressComplete();
-            }
+        if (progressBar.value >= 1f)
+        {
+            OnProgressComplete();
         }
     }
 

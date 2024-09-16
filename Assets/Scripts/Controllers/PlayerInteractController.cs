@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteractController : MonoBehaviour
@@ -12,12 +9,9 @@ public class PlayerInteractController : MonoBehaviour
             CoreGameSignals.OnInteractObjectControl?.Invoke(true);
             takeable.OutlineActive();
         }
-        else if(other.gameObject.TryGetComponent<TrashManager>(out TrashManager trashManager))
-        {
-            CoreGameSignals.OnInteractObjectControl?.Invoke(true);
-        }
         else if(other.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
         {
+            CoreGameSignals.OnInteractObjectControl?.Invoke(true);
             getInteractable.OutlineActive();
         }
     }
@@ -30,12 +24,9 @@ public class PlayerInteractController : MonoBehaviour
             takeable.OutlineDeactive();
             
         }
-        else if(other.gameObject.TryGetComponent<TrashManager>(out TrashManager trashManager))
-        {
-            CoreGameSignals.OnInteractObjectControl?.Invoke(false);
-        }
         else if(other.gameObject.TryGetComponent<IGetInteractable>(out IGetInteractable getInteractable))
         {
+            CoreGameSignals.OnInteractObjectControl?.Invoke(false);
             getInteractable.OutlineDeactive();
         }
     }

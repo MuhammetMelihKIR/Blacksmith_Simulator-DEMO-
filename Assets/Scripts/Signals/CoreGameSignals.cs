@@ -26,6 +26,11 @@ public class CoreGameSignals : MonoBehaviour
         
     }
     #endregion
+    
+    
+    // INPUT
+    
+    public static UnityAction PlayerController_Forge = delegate { };
 
     // PLAYER
     

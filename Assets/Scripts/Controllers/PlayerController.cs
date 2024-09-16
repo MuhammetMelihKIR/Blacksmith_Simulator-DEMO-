@@ -52,35 +52,39 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         playerInput.Enable();
+
+        playerInput.Player.Forge.performed += HammerHit; 
+        
         CoreGameSignals.OnInteractObjectControl += OnIsTrigger;
         CoreGameSignals.OnCursorLockState+= OnCursorLockState;
         CoreGameSignals.OnPlayerCanMove += OnPlayerCanMove;
         CoreGameSignals.Player_OnPlayerCameraRotate += OnPlayerCameraRotate;
     }
-    
+
+    private void HammerHit(InputAction.CallbackContext obj)
+    {
+        CoreGameSignals.PlayerController_Forge?.Invoke();
+    }
     private void OnIsTrigger(bool isTrigger)
     {
         this.isInteract = isTrigger;
     }
-    
     private void OnPlayerCanMove(bool canMove)
     {
        playerCanMove = canMove;
-    }
-    private void OnPlayerCameraRotate(bool canRotate)
+    } private void OnPlayerCameraRotate(bool canRotate)
     {
         cameraCanMove = canRotate;
     }
-    
     private void OnCursorLockState(CursorLockMode mode)
     {
         Cursor.lockState = mode;
     }
-
-
     private void OnDisable()
     {
         playerInput.Disable();
+        
+        playerInput.Player.Forge.performed -= HammerHit; 
         
         CoreGameSignals.OnInteractObjectControl -= OnIsTrigger;
         CoreGameSignals.OnCursorLockState -= OnCursorLockState;
@@ -94,9 +98,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isInteract)
         {
-            
+            CoreGameSignals.OnInteractObject?.Invoke();
         }
-        CoreGameSignals.OnInteractObject?.Invoke();
     }
     
     private void Awake()
@@ -115,8 +118,6 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Move.performed += context => moveInput = context.ReadValue<Vector2>();
         playerInput.Player.Move.canceled += context => moveInput = Vector2.zero;
     }
-   
-
     void Start()
     {
         if (lockCursor)
@@ -133,6 +134,8 @@ public class PlayerController : MonoBehaviour
         {
             crosshairObject.gameObject.SetActive(false);
         }
+        
+        OnCursorLockState(CursorLockMode.None);
     }
 
     void FixedUpdate()

@@ -8,7 +8,8 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: barbarian_texture
-    second: {fileID: 2100000, guid: ed885e0135209ea4dbd6e37fc723874b, type: 2}
+    second: {fileID: -7423125517761585655, guid: 4cbeaac99c21d2c4c8b58d9257c31420,
+      type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -22,9 +23,15 @@ public class DealerManager : MonoBehaviour, IGetInteractable
     [SerializeField] private Canvas canvas;
     [SerializeField] private Button closeCanvasButton;
     [SerializeField] private Button orderConfirmButton;
+    
+    [Header("DEALER TIMER")]
+    [SerializeField] private TextMeshProUGUI dealerTimerText ;
+    
 
     private int totalPrice;
     private Outline outline;
+    
+    private Coroutine dealerTimerCoroutine;  
     
     private DealerState GetDealerState()
     {
@@ -45,7 +52,7 @@ public class DealerManager : MonoBehaviour, IGetInteractable
         else if (GetDealerState()==DealerState.receiveOrder)
         {
             CoreGameSignals.DealerManager_OnReceiveOrder?.Invoke();
-            
+            dealerTimerText.enabled = false;
             SetDealerState(DealerState.takeOrder);
             CoreGameSignals.DealerOrderButton_OnPieceReset?.Invoke();
         }
@@ -82,6 +89,8 @@ public class DealerManager : MonoBehaviour, IGetInteractable
     {
         outline = GetComponent<Outline>();
         CanvasDeactive();
+
+        dealerTimerText.enabled = false;
         
         SetDealerState(DealerState.takeOrder);
         
@@ -91,8 +100,14 @@ public class DealerManager : MonoBehaviour, IGetInteractable
         orderConfirmButton.onClick.AddListener(OrderConfirm);
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
+        DealerTimer();
         if (SplineAnimate.NormalizedTime > 0.99f && GetDealerState() == DealerState.walk)
         {
             SetDealerState(DealerState.receiveOrder);
@@ -110,10 +125,47 @@ public class DealerManager : MonoBehaviour, IGetInteractable
         totalPriceText.text = " Total Price : "+totalPrice.ToString();
     }
     
+    private IEnumerator DealerTimerCoroutine()
+    {
+        while (SplineAnimate.NormalizedTime < 0.99f)
+        {
+            dealerTimerText.text = "Order : " + Mathf.RoundToInt(SplineAnimate.ElapsedTime).ToString();
+        
+            yield return null;  // Bir sonraki frame'e kadar bekler
+        }
+    
+        
+        dealerTimerText.text = "Order : Ready";
+    }
+
+    private void StartDealerTimer()
+    {
+        // Eğer Coroutine çalışıyorsa, önce durdur
+        if (dealerTimerCoroutine != null)
+        {
+            StopCoroutine(dealerTimerCoroutine);
+        }
+    
+        // Coroutine'i yeniden başlat ve referansını sakla
+        SplineAnimate.NormalizedTime = 0f;
+        dealerTimerCoroutine = StartCoroutine(DealerTimerCoroutine());
+    }
+    
+    private void DealerTimer()
+    {
+       // dealerTimerText.text = "Order : "+ Mathf.RoundToInt(SplineAnimate.ElapsedTime).ToString();
+       // if (SplineAnimate.NormalizedTime > 0.99f)
+       // {
+       //     dealerTimerText.text = "Order : Ready";
+       // }
+    }
+    
     private void OrderConfirm()
     {
         if (GetTotalPrice() > 0)
         {
+            StartDealerTimer();
+            dealerTimerText.enabled = true;
             CoreGameSignals.GoldManager_OnGoldUpdate?.Invoke(-GetTotalPrice());
             SetDealerState(DealerState.walk);
             SplineAnimate.Restart( true );

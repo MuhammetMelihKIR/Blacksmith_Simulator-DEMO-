@@ -6,7 +6,7 @@ public class OvenManager : MonoBehaviour, ITakeable
     [SerializeField] private OvenManagerState currentState;
     [SerializeField] private MaterialToMeltedSO[] materialToMeltedSO;
     [SerializeField] private PlayerPickUpAndDropObject playerPickUpAndDropObject;
-    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     
     [Header("UI")]
     [SerializeField] private GameObject ovenClockSlider;
@@ -33,7 +33,7 @@ public class OvenManager : MonoBehaviour, ITakeable
     
     public GameObject GetPrefab()
     {
-        if (currentState == OvenManagerState.melting) return null;
+        if (currentState != OvenManagerState.melted) return null;
        
         return blacksmithObjectSo.prefab;
     }
@@ -52,15 +52,14 @@ public class OvenManager : MonoBehaviour, ITakeable
     {
         if (currentState == OvenManagerState.melting) return null;
         
-        foreach (MaterialToMeltedSO obj in materialToMeltedSO)
+        foreach (MaterialToMeltedSO obj in materialToMeltedSO )
         {
-            if (obj.inputMaterial==playerPickUpAndDropObject.GetBlackSmithObjectSO())
+            if (obj.inputMaterial==playerPickUpAndDropObject.GetBlackSmithObjectSO() && currentState == OvenManagerState.start)
             {
                 blacksmithObjectSo = playerPickUpAndDropObject.GetBlackSmithObjectSO();
                 return blacksmithObjectSo;
             }
         }
-
         return blacksmithObjectSo;
     }
 

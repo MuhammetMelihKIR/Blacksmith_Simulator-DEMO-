@@ -13,7 +13,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     [SerializeField] private Transform instantiatePoint;
     [SerializeField] private List<GameObject> forgingList = new List<GameObject>();
     [SerializeField] private List<Button> buttonList  = new List<Button>();
-    [FormerlySerializedAs("blackSmithObjectSO")] [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
+    [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     
     private int hammerHitNumber;
     private GameObject forgingObject;
@@ -35,12 +35,12 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         Destroy(forgingObject);
         forgingList.RemoveAt(0);
         blacksmithObjectSo = null;
-        currentState = ProductionState.select;
+        currentState = ProductionState.idle;
     }
     
     public void GiveObject()
     {
-        if (currentState != ProductionState.select || !isBlackSmithObject) return;
+        if (currentState != ProductionState.idle || !isBlackSmithObject) return;
        
         CoreGameSignals.OnPlayerCameraChange?.Invoke(true);
         CoreGameSignals.OnPlayerCanMove?.Invoke(false);
@@ -52,17 +52,21 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         
         OutlineDeactive();
         ButtonsCheck();
-        
+        currentState = ProductionState.select;
+
     }
     
     public GameObject GetPrefab()
     {
+        if (currentState!= ProductionState.complete) return null;
+        
         return blacksmithObjectSo.prefab;
     }
     
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
-         
+        if (currentState == ProductionState.forge) return null;
+        
         BlacksmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
       
         foreach (Button button in buttonList)
@@ -75,10 +79,14 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
             }
         }
         
-        
         isBlackSmithObject = false;
+        
+        if ( currentState == ProductionState.complete)
+        {
+            return blacksmithObjectSo;
+        }
 
-        return blacksmithObjectSo;
+        return null;
     }
 
     public void OutlineActive()
@@ -186,7 +194,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         
         equipmentListCloseButton.onClick.AddListener(EquipmentPanelOkButton);
         productionTableExitButton.onClick.AddListener(ProductionTableExit);
-        currentState = ProductionState.select;
+        currentState = ProductionState.idle;
     }
     
     private void EquipmentPanelOkButton() // OK BUTTON CLICK
