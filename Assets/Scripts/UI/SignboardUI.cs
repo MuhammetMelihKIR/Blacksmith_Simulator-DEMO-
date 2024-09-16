@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SignboardUI : MonoBehaviour
 {
+    [SerializeField] private Camera canvasCamera;
     [SerializeField] private GameObject panel;
     [SerializeField] private InputField inputField;
     [SerializeField] private TextMeshProUGUI shopNameText;
@@ -41,5 +40,10 @@ public class SignboardUI : MonoBehaviour
     private void CloseButton()
     {
         panel.SetActive(false);
+        canvasCamera.gameObject.SetActive(false);
+        CoreGameSignals.GameState_OnStateChange?.Invoke(GameState.play);
+        CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
+        CoreGameSignals.Player_OnPlayerCameraRotate?.Invoke(true);
+        CoreGameSignals.OnPlayerCanMove?.Invoke(true);
     }
 }

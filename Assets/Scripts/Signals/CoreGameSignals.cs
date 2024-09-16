@@ -28,6 +28,10 @@ public class CoreGameSignals : MonoBehaviour
     #endregion
     
     
+    // GAME STATE
+    
+    public static UnityAction<GameState> GameState_OnStateChange = delegate { };
+    
     // INPUT
     
     public static UnityAction PlayerController_Forge = delegate { };
