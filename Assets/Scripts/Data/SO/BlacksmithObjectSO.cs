@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
-
 [CreateAssetMenu]
 public class BlacksmithObjectSO : ScriptableObject
 {

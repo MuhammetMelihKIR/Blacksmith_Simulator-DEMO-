@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3782682665880076055}
   - component: {fileID: 6801782603033564388}
+  - component: {fileID: 6016142819866115911}
+  - component: {fileID: 120075007000897285}
   - component: {fileID: 4020900713131851148}
   - component: {fileID: 7530524659888050584}
   m_Layer: 0
@@ -50,6 +52,40 @@ MonoBehaviour:
   customerPrefab: {fileID: 0}
   customerName: 
   blacksmithObjectSO: {fileID: 0}
+--- !u!114 &6016142819866115911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910146774862364403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51af7c196d45bfd48947bf92e09cf2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 120075007000897285}
+--- !u!95 &120075007000897285
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910146774862364403}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a35e1a9468d1ac649a141a5237af5b53, type: 3}
+  m_Controller: {fileID: 9100000, guid: 21ffa3cedde01764c82d6a84e2928248, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!195 &4020900713131851148
 NavMeshAgent:
   m_ObjectHideFlags: 0

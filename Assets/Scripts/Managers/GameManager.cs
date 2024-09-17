@@ -1,12 +1,11 @@
+using System;
 using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private GameState currentState;
-
     private void OnEnable()
     {
         CoreGameSignals.GameState_OnStateChange += OnChangeState;
-        
     }
     private void OnDisable()
     {
@@ -16,12 +15,10 @@ public class GameManager : MonoBehaviour
     {
         currentState = newState;
     }
-   
     private void Awake()
     {
         currentState = GameState.editBoard;
     }
-
     private void Update()
     {
         switch (currentState)
@@ -41,6 +38,8 @@ public class GameManager : MonoBehaviour
                 CoreGameSignals.OnPlayerCanMove?.Invoke(false);
                 Time.timeScale = 0;
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 }

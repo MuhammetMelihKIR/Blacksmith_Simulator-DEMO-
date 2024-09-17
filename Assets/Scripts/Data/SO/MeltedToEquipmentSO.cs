@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu]
 public class MeltedToEquipmentSO : ScriptableObject
@@ -8,5 +6,4 @@ public class MeltedToEquipmentSO : ScriptableObject
     public BlacksmithObjectSO inputObject;
     public BlacksmithObjectSO outputObject;
     public float forgingTime;
-
 }

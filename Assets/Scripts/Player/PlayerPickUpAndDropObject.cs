@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
-
 public class PlayerPickUpAndDropObject : MonoBehaviour
 {
     #region References
@@ -26,6 +21,7 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
     {
         blacksmithObjectSo = null;
         Destroy(sampleObject);
+        pickUpObjectList.Remove(sampleObject);
     }
     private void OnDisable()
     {
@@ -66,7 +62,6 @@ public class PlayerPickUpAndDropObject : MonoBehaviour
            }
        }
     }
-
     private void TryDropObject(ITakeable takeable)
     {
         if (blacksmithObjectSo == takeable.GetBlackSmithObjectSO())

@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ public class GoldManager : MonoBehaviour
 
     private void OnEnable()
     {
-     
         CoreGameSignals.GoldManager_OnGoldUpdate += OnGoldUpdate;
     }
     private void OnDisable()
@@ -25,10 +23,6 @@ public class GoldManager : MonoBehaviour
     {
         goldText.text = gold.ToString();
     } 
-    private int GetGold()
-    {
-        return gold;
-    }
     private void OnGoldUpdate(int amount)
     {
         if (amount < 0 && Mathf.Abs(amount) > gold) return;

@@ -11,8 +11,7 @@ public class CoreGameSignals : MonoBehaviour
 {   
     #region Singleton
     private static CoreGameSignals _instance;
-    public static CoreGameSignals Instance { get { return _instance; }
-    }
+    public static CoreGameSignals Instance { get { return _instance; } }
 
     private void Awake()
     {
@@ -50,6 +49,11 @@ public class CoreGameSignals : MonoBehaviour
     
     public static UnityAction PlayerPickUpAndDropObject_OnPickUpListRemove = delegate { }; // PLAYER PICK UP AND DROP OBJECT
     
+    // CUSTOMER AI ANIMATION
+    
+    public static UnityAction CustomerAI_OnWalkingAnimation = delegate { };
+    public static UnityAction CustomerAI_OnIdleAnimation = delegate { };
+   
     // INTERFACE
     
     public static UnityAction<ITakeable> Takeable_OnObjectDetected = delegate { }; // ITAKEABLE INTERFACE CONTROL 

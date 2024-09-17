@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
-
 public class StorageBoxManager : MonoBehaviour,ITakeable
 {
-    
     [SerializeField] private List<GameObject> bars = new List<GameObject>();
     [SerializeField] private BlacksmithObjectSO blacksmithObjectSo;
     private int numberOfBarsUsed;
@@ -19,50 +13,33 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
     
     public void GetObject()
     {
-        DecreaseObject();
+       DecreaseObject();
     }
-    
     public void GiveObject()
     {
         IncreaseObject();
     }
-    
     public GameObject GetPrefab()
     {
         return blacksmithObjectSo.prefab;
     }
-    
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
         return blacksmithObjectSo;
     }
-    
     public void OutlineActive()
     {
         outline.enabled = true;
     }
-
     public void OutlineDeactive()
     {
         outline.enabled = false;
     }
-
     #endregion
-  
-
-    public BlacksmithObjectSO GetBlacksmithObjectSO()
-    {
-        return blacksmithObjectSo;
-    }
     public int GetNumberOfBarsUsed()
     {
         numberOfBarsUsed= maxBars-currentIndex-1;
         return numberOfBarsUsed;
-    }
-
-    public int GetBarCount()
-    {
-        return bars.Count;
     }
     private void Awake()
     {
@@ -74,7 +51,6 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
             bars[i].SetActive(true);
         }
     }
-    
     private void DecreaseObject()
     {
         if (currentIndex >= 0)
@@ -84,7 +60,6 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
             currentIndex--;
         } 
     }
-
     private void IncreaseObject()
     {
         if (currentIndex < maxBars - 1 && currentIndex < bars.Count - 1)
@@ -94,16 +69,11 @@ public class StorageBoxManager : MonoBehaviour,ITakeable
             bar.SetActive(true);
         }
     }
-    
     public void ReceiveOrder(int piece)
     {
-        print(piece+" receive order + storage box");
         for (int i = 0; i < piece; i++)
         {
             IncreaseObject();
-            print("receive order + storage box");
         }
     }
-    
-    
 }

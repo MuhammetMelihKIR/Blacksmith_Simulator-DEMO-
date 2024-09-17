@@ -1,8 +1,7 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-
 public class ProductionTableManager : MonoBehaviour, ITakeable
 {
     [SerializeField] private ProductionState currentState;
@@ -25,7 +24,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     [SerializeField] private GameObject equipmentListPanel;
     [SerializeField] private GameObject forgingSliderPanel;
     [SerializeField] private Button equipmentListCloseButton;
-    [SerializeField] private Button productionTableExitButton;
+    [SerializeField] private TextMeshProUGUI forgeIndexText;
     
 
     #region IGetInteractable INTERFACE
@@ -37,7 +36,6 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         blacksmithObjectSo = null;
         currentState = ProductionState.idle;
     }
-    
     public void GiveObject()
     {
         if (currentState != ProductionState.idle || !isBlackSmithObject) return;
@@ -53,16 +51,13 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         OutlineDeactive();
         ButtonsCheck();
         currentState = ProductionState.select;
-
     }
-    
     public GameObject GetPrefab()
     {
         if (currentState!= ProductionState.complete) return null;
         
         return blacksmithObjectSo.prefab;
     }
-    
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
         if (currentState == ProductionState.forge) return null;
@@ -78,14 +73,12 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
                 return playerObjectSO;
             }
         }
-        
         isBlackSmithObject = false;
         
         if ( currentState == ProductionState.complete)
         {
             return blacksmithObjectSo;
         }
-
         return null;
     }
 
@@ -93,12 +86,11 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     {
         outline.enabled = true;
     }
-    
     public void OutlineDeactive()
     {
         outline.enabled = false;
     }
-
+    
     #endregion
 
     #region ON ENABLE/DISABLE
@@ -113,9 +105,6 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreUISignals.OnProductionTable_EquipmentListPanelIsActive += OnEquipmentListPanelIsActive;
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive += OnForgingSliderPanelIsActive;
     }
-    
-    
-    
     private void InstantiateObjectForForging(BlacksmithObjectSO SO,Material material)
     {
         if (currentState != ProductionState.select) return;
@@ -123,9 +112,7 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         blacksmithObjectSo = SO;
         InstantiateObject();
         forgingObject.GetComponentInChildren<MeshRenderer>().material = material;
-      
     }
-
     private void InstantiateObject()
     {
         if (forgingList.Count >=1)
@@ -140,17 +127,18 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     }
     private void OnHammerHit()
     {
+        if (currentState!= ProductionState.forge)return;
         hammerHitNumber++;
-        if (hammerHitNumber>=1)
-        {
-            CoreGameSignals.OnPlayerCameraChange?.Invoke(false);
-            CoreGameSignals.OnPlayerCanMove?.Invoke(true);
-            CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
-            CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
-            hammerHitNumber = 0;
-            InstantiateObject();
-            currentState = ProductionState.complete;
-        }
+        ForgeIndexText();
+        if (hammerHitNumber < 5) return;
+        CoreGameSignals.OnPlayerCameraChange?.Invoke(false);
+        CoreGameSignals.OnPlayerCanMove?.Invoke(true);
+        CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
+        CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive?.Invoke(false);
+        hammerHitNumber = 0;
+        ForgeIndexText();
+        InstantiateObject();
+        currentState = ProductionState.complete;
     }
     
     #region UI 
@@ -171,11 +159,9 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
     }
 
     #endregion
-   
 
     private void OnDisable()
     {
-        
         CoreGameSignals.OnProductionTable_InstantiateObjectForForging -= InstantiateObjectForForging;
         CoreGameSignals.ProductionTable_OnHammerHit -= OnHammerHit;
         
@@ -184,19 +170,16 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreUISignals.OnProductionTable_EquipmentListPanelIsActive -= OnEquipmentListPanelIsActive;
         CoreUISignals.OnProductionTable_ForgingSliderPanelIsActive -= OnForgingSliderPanelIsActive;
     }
-
     #endregion
-    
-    
     private void Awake()
     {
         outline = GetComponent<Outline>();
         
         equipmentListCloseButton.onClick.AddListener(EquipmentPanelOkButton);
-        productionTableExitButton.onClick.AddListener(ProductionTableExit);
         currentState = ProductionState.idle;
+        ForgeIndexText();
+        
     }
-    
     private void EquipmentPanelOkButton() // OK BUTTON CLICK
     {
         if (currentState != ProductionState.select) return;
@@ -207,17 +190,6 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
         CoreGameSignals.PlayerPickUpAndDropObject_OnPickUpListRemove?.Invoke();
     }
-
-    private void ProductionTableExit() // EXIT BUTTON CLICK
-    {
-        CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.Locked);
-        CoreGameSignals.OnPlayerCameraChange?.Invoke(false);
-        CoreGameSignals.OnPlayerCanMove?.Invoke(true);
-        
-        Destroy(forgingObject);
-        forgingList.Remove(forgingObject);
-    }
-
     private void ButtonsCheck() // BUTTONS INTERACTABLE CHECK
     {
         BlacksmithObjectSO playerObjectSO = playerPickUpAndDropObject.GetBlackSmithObjectSO();
@@ -234,5 +206,8 @@ public class ProductionTableManager : MonoBehaviour, ITakeable
             }
         }
     }
-    
+    private void ForgeIndexText()
+    {
+        forgeIndexText.text = hammerHitNumber.ToString()+"/5";
+    }
 }

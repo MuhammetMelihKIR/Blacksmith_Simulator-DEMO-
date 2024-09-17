@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -27,7 +26,6 @@ public class DealerManager : MonoBehaviour, IGetInteractable
     [Header("DEALER TIMER")]
     [SerializeField] private TextMeshProUGUI dealerTimerText ;
     
-
     private int totalPrice;
     private Outline outline;
     
@@ -57,17 +55,14 @@ public class DealerManager : MonoBehaviour, IGetInteractable
             CoreGameSignals.DealerOrderButton_OnPieceReset?.Invoke();
         }
     }
-
     public void OutlineActive()
     {
         outline.enabled = true;
     }
-
     public void OutlineDeactive()
     { 
         outline.enabled = false;
     }
-
     #endregion
 
     #region  ONENABLE / ONDISABLE
@@ -76,15 +71,11 @@ public class DealerManager : MonoBehaviour, IGetInteractable
     {
         CoreGameSignals.DealerManager_OnTotalPriceUpdate += TotalPriceUpdate;
     }
-
     private void OnDisable()
     {
         CoreGameSignals.DealerManager_OnTotalPriceUpdate -= TotalPriceUpdate;
     }
-
     #endregion
-    
-
     private void Awake()
     {
         outline = GetComponent<Outline>();
@@ -99,12 +90,6 @@ public class DealerManager : MonoBehaviour, IGetInteractable
         closeCanvasButton.onClick.AddListener(CloseButton);
         orderConfirmButton.onClick.AddListener(OrderConfirm);
     }
-
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
         DealerTimer();
@@ -129,37 +114,36 @@ public class DealerManager : MonoBehaviour, IGetInteractable
     {
         while (SplineAnimate.NormalizedTime < 0.99f)
         {
-            dealerTimerText.text = "Order : " + Mathf.RoundToInt(SplineAnimate.ElapsedTime).ToString();
-        
-            yield return null;  // Bir sonraki frame'e kadar bekler
+            float remainingTime = Mathf.Max(0, SplineAnimate.Duration - SplineAnimate.ElapsedTime); // Geriye sayması için maxTime - ElapsedTime
+            
+            dealerTimerText.text = "Order : " + Mathf.RoundToInt(remainingTime).ToString();
+            
+            if (remainingTime <= 0)
+            {
+                dealerTimerText.text = "Order : Ready";
+                yield break;
+            }
+            yield return null; 
         }
-    
-        
         dealerTimerText.text = "Order : Ready";
     }
-
     private void StartDealerTimer()
     {
-        // Eğer Coroutine çalışıyorsa, önce durdur
         if (dealerTimerCoroutine != null)
         {
             StopCoroutine(dealerTimerCoroutine);
         }
-    
-        // Coroutine'i yeniden başlat ve referansını sakla
         SplineAnimate.NormalizedTime = 0f;
         dealerTimerCoroutine = StartCoroutine(DealerTimerCoroutine());
     }
-    
     private void DealerTimer()
     {
-       // dealerTimerText.text = "Order : "+ Mathf.RoundToInt(SplineAnimate.ElapsedTime).ToString();
-       // if (SplineAnimate.NormalizedTime > 0.99f)
-       // {
-       //     dealerTimerText.text = "Order : Ready";
-       // }
+        dealerTimerText.text = "Order : "+ Mathf.RoundToInt(SplineAnimate.ElapsedTime).ToString();
+        if (SplineAnimate.NormalizedTime > 0.99f)
+        {
+            dealerTimerText.text = "Order : Ready";
+        }
     }
-    
     private void OrderConfirm()
     {
         if (GetTotalPrice() > 0)
@@ -172,7 +156,6 @@ public class DealerManager : MonoBehaviour, IGetInteractable
             CanvasDeactive();
         }
     }
-
     #region WAGON MOVEMENT
     private void WagonMove(bool isMoving)
     {
@@ -191,7 +174,6 @@ public class DealerManager : MonoBehaviour, IGetInteractable
     {
         horseAnimator.SetBool("isWalk",isWalking);
     }
-
     #endregion
 
     #region UI 
@@ -217,9 +199,5 @@ public class DealerManager : MonoBehaviour, IGetInteractable
         CoreGameSignals.OnCursorLockState?.Invoke(CursorLockMode.None);
         CoreGameSignals.Player_OnPlayerCameraRotate?.Invoke(false);
     }
-    
-
     #endregion
-    
-    
 }

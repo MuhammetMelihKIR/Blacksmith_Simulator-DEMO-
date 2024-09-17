@@ -1,9 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
-
-
 public class CustomerAI : MonoBehaviour,IGetInteractable
 {
     [Header("Customer Info")]
@@ -49,7 +46,6 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
     {
         agent = GetComponent<NavMeshAgent>();
     }
-
     public void CustomerSOSetup()
     {
         customerPrefab = customerSO.customerPrefab;
@@ -67,7 +63,6 @@ public class CustomerAI : MonoBehaviour,IGetInteractable
     public void AgentGoToEndPoint(Transform endPoint)
     {
         agent.SetDestination(endPoint.position);
-        
     }
     private void OnTriggerEnter(Collider other)
     {

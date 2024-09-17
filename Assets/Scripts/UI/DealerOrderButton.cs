@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,26 +13,21 @@ public class DealerOrderButton : MonoBehaviour
     [SerializeField] private Button decreasePieceButton;
     private int piece;
     private int purchasePrice;
-
-
     private void OnEnable()
     {
         CoreGameSignals.DealerManager_OnReceiveOrder += OnReceiveOrder;
         CoreGameSignals.DealerOrderButton_OnPieceReset += OnPieceReset;
     }
-    
     private void OnReceiveOrder()
     {
         print(piece);
         storageBoxManager.ReceiveOrder(piece);
     }
-
     private void OnDisable()
     {
         CoreGameSignals.DealerManager_OnReceiveOrder -= OnReceiveOrder;
         CoreGameSignals.DealerOrderButton_OnPieceReset -= OnPieceReset;
     }
-
     private void Awake()
     {
         image.sprite =  storageBoxManager.GetBlackSmithObjectSO().objectSprite;
@@ -49,7 +41,6 @@ public class DealerOrderButton : MonoBehaviour
         increasePieceButton.onClick.AddListener(PieceIncrease);
         decreasePieceButton.onClick.AddListener(PieceDecrease);
     }
-
     private void PieceIncrease()
     {
         if (piece < storageBoxManager.GetNumberOfBarsUsed())
@@ -68,7 +59,6 @@ public class DealerOrderButton : MonoBehaviour
             CoreGameSignals.DealerManager_OnTotalPriceUpdate?.Invoke(-purchasePrice);
         }
     }
-    
     private void OnPieceReset()
     {
         piece = 0;

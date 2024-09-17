@@ -23,31 +23,26 @@ public class OvenManager : MonoBehaviour, ITakeable
         OvenClockSliderSetActive(false);
         currentState = OvenManagerState.start;
     }
-
     public void GiveObject()
     {
         if (currentState != OvenManagerState.start) return;
         
         MeltToMaterial();
     }
-    
     public GameObject GetPrefab()
     {
         if (currentState != OvenManagerState.melted) return null;
        
         return blacksmithObjectSo.prefab;
     }
-    
     public void OutlineActive()
     {
        outline.enabled = true;
     }
-
     public void OutlineDeactive()
     {
         outline.enabled = false;
     }
-    
     public BlacksmithObjectSO GetBlackSmithObjectSO()
     {
         if (currentState == OvenManagerState.melting) return null;
@@ -84,13 +79,11 @@ public class OvenManager : MonoBehaviour, ITakeable
         currentState = OvenManagerState.start;
         OvenClockSliderSetActive(false);
     }
-    
     public OvenManagerState CurrentState(OvenManagerState state)
     {
         currentState = state;
         return currentState;
     }
-    
     private void OvenClockSliderSetActive(bool isActive)
     {
         ovenClockSlider.SetActive(isActive);

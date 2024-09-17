@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -9,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private PlayerInput playerInput;
+    private bool isInteract;
 
     #region Camera Movement Variables
 
@@ -29,7 +27,6 @@ public class PlayerController : MonoBehaviour
     private float yaw = 0.0f;
     private float pitch = 0.0f;
     private Image crosshairObject;
-
     #endregion
 
     #region Movement Variables
@@ -43,9 +40,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     #endregion
-
-    private bool isInteract;
-    
 
     #region ON ENABLE / DISABLE
 
@@ -91,7 +85,6 @@ public class PlayerController : MonoBehaviour
         CoreGameSignals.Player_OnPlayerCameraRotate -= OnPlayerCameraRotate;
         CoreGameSignals.OnPlayerCanMove -= OnPlayerCanMove;
     }
-
     #endregion
     
     private void OnInteract()
@@ -101,17 +94,12 @@ public class PlayerController : MonoBehaviour
             CoreGameSignals.OnInteractObject?.Invoke();
         }
     }
-    
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
         crosshairObject = GetComponentInChildren<Image>();
-
-        // Set internal variables
         playerCamera.fieldOfView = fov;
-
-        // Input Actions Initialization
         playerInput = new PlayerInput();
 
         playerInput.Player.Look.performed += context => lookInput = context.ReadValue<Vector2>();
@@ -134,20 +122,18 @@ public class PlayerController : MonoBehaviour
         {
             crosshairObject.gameObject.SetActive(false);
         }
-        
         OnCursorLockState(CursorLockMode.None);
     }
-
     void FixedUpdate()
     {
         #region Movement
 
         if (playerCanMove)
         {
-            // Calculate how fast we should be moving
+            
             Vector3 targetVelocity = new Vector3(moveInput.x, 0, moveInput.y);
             targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
-            // Apply a force that attempts to reach our target velocity
+            
             Vector3 velocity = rb.velocity;
             Vector3 velocityChange = (targetVelocity - velocity);
             velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
@@ -155,10 +141,8 @@ public class PlayerController : MonoBehaviour
             velocityChange.y = 0;
             rb.AddForce(velocityChange, ForceMode.VelocityChange);
         }
-
         #endregion
     }
-
     private void LateUpdate()
     {
         #region Camera
@@ -168,15 +152,10 @@ public class PlayerController : MonoBehaviour
             lookInput = playerInput.Player.Look.ReadValue<Vector2>();
             yaw += lookInput.x * mouseSensitivity;
             pitch -= lookInput.y * mouseSensitivity;
-            // Clamp pitch between lookAngle
             pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
-
             transform.localEulerAngles = new Vector3(0, yaw, 0);
             playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
         }
-
         #endregion
     }
-
-   
 }

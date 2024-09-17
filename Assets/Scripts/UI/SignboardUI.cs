@@ -19,14 +19,13 @@ public class SignboardUI : MonoBehaviour
         shopNameText.text = "Default Shop Name";
         
         inputField.onValueChanged.AddListener(UpdateShopName);
-        // Slayt değerleri değiştiğinde rengi güncelle
+        
         redSlider.onValueChanged.AddListener(UpdateTextColor);
         greenSlider.onValueChanged.AddListener(UpdateTextColor);
         blueSlider.onValueChanged.AddListener(UpdateTextColor);
         
         closeButton.onClick.AddListener(CloseButton);
     }
-
     private void UpdateShopName(string newName)
     {
         shopNameText.text = newName;
@@ -36,7 +35,6 @@ public class SignboardUI : MonoBehaviour
         Color newColor = new Color(redSlider.value, greenSlider.value, blueSlider.value);
         shopNameText.color = newColor;
     }
-
     private void CloseButton()
     {
         panel.SetActive(false);

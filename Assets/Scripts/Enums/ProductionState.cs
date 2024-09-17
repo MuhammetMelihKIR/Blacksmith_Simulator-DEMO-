@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-  public enum ProductionState
+﻿  public enum ProductionState
   {
       idle,select,forge,complete
   }

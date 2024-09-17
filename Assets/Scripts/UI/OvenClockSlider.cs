@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,22 +10,18 @@ public class OvenClockSlider : MonoBehaviour
     private float elapsedTime = 0f;
     private bool isFilling = true;
 
-
     private void OnEnable()
     {
         CoreGameSignals.OvenManager_OnIsMelted += StartProgressBar;
     }
-
     private void OnDisable()
     {
         CoreGameSignals.OvenManager_OnIsMelted -= StartProgressBar;
     }
-
     private void Start()
     {
         progressBar.value = 0f;
     }
-
     private void Update()
     {
         if (isFilling) return;
@@ -39,14 +34,12 @@ public class OvenClockSlider : MonoBehaviour
             OnProgressComplete();
         }
     }
-
     private void StartProgressBar(bool isfilling)
     {
         this.isFilling = isfilling;
         elapsedTime = 0f;
         progressBar.value = 0f;
     }
-
     private void OnProgressComplete()
     {
         OvenManager.CurrentState(OvenManagerState.melted);

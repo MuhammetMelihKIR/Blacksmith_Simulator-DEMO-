@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Rendering;
-
+﻿using UnityEngine;
 public class CameraManager : MonoBehaviour
   {
       [SerializeField] private Camera playerCamera;

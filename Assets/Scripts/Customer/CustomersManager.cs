@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -30,13 +29,11 @@ public class CustomersManager : MonoBehaviour
          CoreUISignals.CustomerManager_CustomerInfoUpdate += UpdateCustomerInfo;
          CoreGameSignals.CustomerManager_OnProcessCustomerInQueue += ProcessCustomerInQueue;
      }
-
      private void OnDisable()
      {
          CoreUISignals.CustomerManager_CustomerInfoUpdate -= UpdateCustomerInfo;
          CoreGameSignals.CustomerManager_OnProcessCustomerInQueue -= ProcessCustomerInQueue;
      }
-
      private void Awake()
      {
          for (int i = 0; i < maxCustomers; i++)
@@ -44,12 +41,10 @@ public class CustomersManager : MonoBehaviour
              SpawnNewCustomerAtQueuePosition(i);
          }
      }
-     
      private void Update()
      {
          CanvasEnable();
      }
-     
      private void SpawnNewCustomerAtQueuePosition(int index)
      {
          GameObject customer = Instantiate(customerAI, queuePositions[index].position,  Quaternion.LookRotation(queuePositions[0].forward));
@@ -60,6 +55,7 @@ public class CustomersManager : MonoBehaviour
          CustomerSO customerSO = customerListSO.customerSOList[Random.Range(0, customerListSO.customerSOList.Count)];
          customer.GetComponent<CustomerAI>().GetCustomerSO(customerSO);
          customer.GetComponent<CustomerAI>().CustomerSOSetup();
+         
 
          // Müşteriyi sıraya ekle
          customers.Enqueue(customer.GetComponent<CustomerAI>());
@@ -68,7 +64,7 @@ public class CustomersManager : MonoBehaviour
          if (index < queuePositions.Count)
          {
              customer.SetActive(true);
-             customer.GetComponent<CustomerAI>().AgentGoToStartPoint(queuePositions[index]);
+             customer.GetComponent<CustomerAI>().AgentGoToStartPoint(queuePositions[index]);             
          }
      }
      
@@ -96,14 +92,11 @@ public class CustomersManager : MonoBehaviour
              remainingCustomers[i].AgentGoToStartPoint(queuePositions[i]);
          }
      }
-     
      public void UpdateCustomerInfo(string newName, string newOrder)
      {
          customerNameText.text = newName;
          orderText.text = newOrder;
      }
-     
-     
      // Karakter Canvas a bakmıyorsa canvas ı kapat
      private void CanvasEnable()
      {
@@ -118,10 +111,6 @@ public class CustomersManager : MonoBehaviour
          {
              worldCanvas.enabled = false; 
          }
-         
      }
-    
-    
-     
      
  }
